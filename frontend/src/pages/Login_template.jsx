@@ -1,5 +1,5 @@
-import {LoginComp} from '../components/Login_comp';
+import {Formulario} from '../components/Login_comp';
 
 export function Login_template() {
-  return <LoginComp/>
+  return <Formulario/>
 }
