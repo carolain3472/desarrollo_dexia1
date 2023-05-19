@@ -16,9 +16,11 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.exceptions import AuthenticationFailed
 
 from .serializer import UsuarioSerializer
 from rest_framework import viewsets
+
 
 from .models import CustomUser
 
@@ -55,3 +57,27 @@ class Logout(APIView):
         request.user.auth_token.delete()
         logout(request)
         return Response(status = status.HTTP_200_OK)
+    
+
+class LoginView(APIView):
+    def post(self, request):
+        cedula = request.data.get('cedula')
+        password = request.data.get('password')
+
+        try:
+            # Buscar al usuario por cédula en la base de datos
+            usuario = CustomUser.objects.get(cedula=cedula)
+
+            # Verificar la contraseña del usuario
+            if usuario.check_password(password):
+                # Autenticar al usuario y generar un token de autenticación
+                user = authenticate(cedula=cedula, password=password)
+                if user is not None:
+                    login(request, user)
+                    token, _ = Token.objects.get_or_create(user=user)
+                    return Response({'valid': True, 'token': token.key})
+
+        except CustomUser.DoesNotExist:
+            raise AuthenticationFailed('Las credenciales proporcionadas son inválidas.')
+
+        return Response({'valid': False})

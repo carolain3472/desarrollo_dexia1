@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'coreapi',
+
     'modulo_base_login'
 ]
 
