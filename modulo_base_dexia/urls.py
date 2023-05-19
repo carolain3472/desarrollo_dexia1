@@ -19,6 +19,8 @@ from django.urls import path, include
 from rest_framework.authtoken import views
 from modulo_base_login.views import Login,Logout
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', include(('modulo_base_login.urls', 'default'))),
