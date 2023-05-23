@@ -3,6 +3,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 //import 'bootstrap/dist/css/bootstrap'
 import formularioImage from '../images/formulario_image.jpg'; // Ruta relativa de la imagen
+import dexiaLogo from '../images/dexia_logo.png'; // Ruta relativa de la imagen
 
 export const Formulario = () => {
   const [cedula, setCedula] = useState("");
@@ -26,6 +27,8 @@ export const Formulario = () => {
         // Manejar la respuesta del backend
         if (response.data.valid) {
           // Redirigir a otra página
+          sessionStorage.setItem("nombre", response.data.nombre);
+          sessionStorage.setItem('cedula',cedula);
           window.location.href = "http://localhost:5173/next";
         } else {
           // Mostrar un mensaje de error o realizar alguna otra acción en caso de respuesta negativa
@@ -39,21 +42,21 @@ export const Formulario = () => {
   };
 
   return (
-    <section className="vh-100">
+    <section className="vh-100" style={{ overflow: 'hidden', height: '100%' }}>
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-6 text-black">
   
             <div className="px-5 ms-xl-4">
-              <i className="fas fa-crow fa-2x me-3 pt-5 mt-xl-4" style={{ color: "#709085" }}></i>
-              <span className="h1 fw-bold mb-0">Logo</span>
+              <i className="fas fa-crow fa-2x me-3 " style={{ color: "#709085" }}></i>
+              <img src={dexiaLogo} alt="Dexia Logo" style={{margin:0, display:"block", maxWidth:'30%', height:'auto'}}/>
             </div>
-  
-            <div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+      
+            <div className="d-flex align-items-center h-custom-2 px-5  pt-5 pt-xl-0 mt-xl-n5" style={{marginTop: '-3rem'}}>
   
               <form style={{ width: "23rem" }} onSubmit={handleSubmit}>
   
-                <h3 className="fw-normal mb-3 pb-3" style={{ letterSpacing: "1px" }}>Log in</h3>
+                <h3 className="fw-normal mb-3" style={{ letterSpacing: "1px" }}>Bienvenidos al software de consejeria</h3>
   
                 <div className="form-outline mb-4">
                 <label className="form-label" htmlFor="form2Example18">Cédula</label>
@@ -66,10 +69,11 @@ export const Formulario = () => {
                 </div>
   
                 <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="form2Example28">Password</label>
+                <label className="form-label" htmlFor="form2Example28">Contraseña</label>
                   <input type="password" id="form2Example28" className="form-control form-control-lg" value={password}
-                    onChange={handlePasswordChange} />
-                  
+                    onChange={handlePasswordChange} 
+                    placeholder="*********"/>
+                   
                 </div>
   
                 <div className="pt-1 mb-4">
@@ -77,7 +81,7 @@ export const Formulario = () => {
 
                 </div>
   
-                <p className="small mb-5 pb-lg-2"><a className="text-muted" href="#!">Forgot password?</a></p>
+                <p className="small mb-5 pb-lg-2"><a className="text-muted" href="#!">¿Olvidaste tu contraseña?</a></p>
   
               </form>
   
