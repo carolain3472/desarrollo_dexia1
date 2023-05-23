@@ -53,10 +53,20 @@ class Login(FormView):
             return super(Login,self).form_valid(form)
         
 class Logout(APIView):
-    def get(self,request, format = None):
-        request.user.auth_token.delete()
-        logout(request)
-        return Response(status = status.HTTP_200_OK)
+    def post(self, request, format=None):
+        cedula = request.data.get('cedula')
+
+        try:
+            # Buscar al usuario por nombre de usuario en la base de datos
+            user = CustomUser.objects.get(cedula=cedula)
+            
+            # Eliminar el token de acceso del usuario
+            Token.objects.filter(user=user).delete()
+            
+            return Response(status=status.HTTP_200_OK)
+        except CustomUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+    
     
 
 class LoginView(APIView):
@@ -75,7 +85,7 @@ class LoginView(APIView):
                 if user is not None:
                     login(request, user)
                     token, _ = Token.objects.get_or_create(user=user)
-                    return Response({'valid': True, 'token': token.key})
+                    return Response({'valid': True, 'token': token.key, 'nombre': usuario.first_name})
 
         except CustomUser.DoesNotExist:
             raise AuthenticationFailed('Las credenciales proporcionadas son inválidas.')
