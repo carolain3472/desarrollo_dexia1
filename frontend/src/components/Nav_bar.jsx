@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faAnchor, faHome, faTachometerAlt, faFileUpload, faPhotoVideo, faBuildingColumns, faUsers, faMoneyCheckAlt, faCogs, faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import React, { useEffect, useState } from 'react';
-import {mobileScreen} from '../api/navbar'; // Importa mobileScreen desde el archivo navbar.js
+import { mobileScreen } from '../api/navbar'; // Importa mobileScreen desde el archivo navbar.js
 import axios from 'axios';
+import { Button, Modal } from "react-bootstrap";
 
 export function NavbarAdmin() {
   const storedCel = sessionStorage.getItem('nombre');
@@ -45,10 +46,7 @@ export function NavbarAdmin() {
     }
   };
 
-
-
   const handleLogout = () => {
-    
     const cedulaUser = sessionStorage.getItem("cedula");
     console.log(cedulaUser)
 
@@ -58,15 +56,21 @@ export function NavbarAdmin() {
         console.log("Logout exitoso");
         sessionStorage.removeItem("cedula");
         window.location.href = "http://localhost:5173/login/";
-        // Realizar cualquier acción adicional necesaria, como redirigir al usuario a la página de inicio de sesión.
- 
       })
       .catch((error) => {
         console.error("Error al realizar el logout", error);
-        // Manejar el error de acuerdo a tus necesidades.
       });
   };
 
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModalOpen = () => {
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
 
   return (
     <div className='dashboard'>
@@ -76,7 +80,7 @@ export function NavbarAdmin() {
             <FontAwesomeIcon icon={faBars} />
           </a>
           <a href='#!' className='brand-logo'>
-          <FontAwesomeIcon icon={faBuildingColumns} style={{ color: "#ffffff" }} /> <span>DEXIA</span>
+            <FontAwesomeIcon icon={faBuildingColumns} style={{ color: "#ffffff" }} /> <span>DEXIA</span>
           </a>
         </header>
         <nav className='dashboard-nav-list'>
@@ -93,7 +97,6 @@ export function NavbarAdmin() {
             <a href='#!' className='dashboard-nav-item'>
               <FontAwesomeIcon icon={faUser} /> Registrar usuario
             </a>
-           
           </div>
           <div className='dashboard-nav-dropdown'>
             <a href='#!' className='dashboard-nav-item dashboard-nav-dropdown-toggle'>
@@ -110,9 +113,8 @@ export function NavbarAdmin() {
           <a href='#!' className='dashboard-nav-item'>
             <FontAwesomeIcon icon={faCogs} /> Perfil
           </a>
-
           <div className='nav-item-divider'></div>
-          <a  onClick={handleLogout} className='dashboard-nav-item'>
+          <a  onClick={handleModalOpen} className='dashboard-nav-item'>
             <FontAwesomeIcon icon={faSignOutAlt} /> Logout
           </a>
         </nav>
@@ -132,6 +134,24 @@ export function NavbarAdmin() {
               <div className='card-body'>
                 <p>Estás dentro del sistema como: Administrador</p>
               </div>
+
+          
+
+              <Modal show={showModal} onHide={handleModalClose} centered backdrop="static">
+  <Modal.Header>
+    <Modal.Title>Salir de la sesión</Modal.Title>
+    <Button variant="danger" onClick={handleModalClose}>
+      <span aria-hidden="true">&times;</span>
+    </Button>
+  </Modal.Header>
+  <Modal.Body>¿Deseas finalizar la sesión?</Modal.Body>
+  <Modal.Footer>
+    <Button type="submit" variant="danger" onClick={() => { handleModalClose(); handleLogout(); }}>
+      Salir
+    </Button>
+  </Modal.Footer>
+</Modal>
+
             </div>
           </div>
         </div>
