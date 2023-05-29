@@ -1,5 +1,6 @@
 
 
+from typing import Any
 from django.shortcuts import render,redirect
 from rest_framework import generics
 from django.urls import reverse_lazy
@@ -8,16 +9,17 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic.edit import FormView
 from django.contrib.auth import login,logout,authenticate
-from django.http import HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework import permissions, status
 
-from .serializer import UsuarioSerializer
+from .serializer import UsuarioSerializer, UserLoginSerializer
 from rest_framework import viewsets
 
 from .models import CustomUser
@@ -26,32 +28,28 @@ from .models import CustomUser
 class UsuariosList(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UsuarioSerializer
-    permission_classes = (IsAuthenticated,)
-    authentication_class = (TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
+
+    def get(self,request):
+        serializer= UsuarioSerializer(request.user)
+        return Response({'user': serializer.data}, status= status.HTTP_200_OK)
 
 
-class Login(FormView):
-    template_name = "login_user.html"
-    form_class = AuthenticationForm
-    success_url = reverse_lazy('default:usuarioList1-list')
+class UserLogin(FormView):
+   permission_classes= (permissions.AllowAny ,)
+   authentication_classes= (SessionAuthentication ,)
 
-    @method_decorator(csrf_protect)
-    @method_decorator(never_cache)
-    def dispatch(self,request,*args,**kwargs):
-        if request.user.is_authenticated:
-            return HttpResponseRedirect(self.get_success_url())
-        else:
-            return super(Login,self).dispatch(request,*args,*kwargs)
+   def post(self, request):
+       data= request.data
+       serializer = UserLoginSerializer(data=data)
+       if serializer.is_valid(raise_exception=True):
+           user=serializer.check_user(data)
+           login(request, user)
+           return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def form_valid(self,form):
-        user = authenticate(username = form.cleaned_data['username'], password = form.cleaned_data['password'])
-        token,_ = Token.objects.get_or_create(user = user)
-        if token:
-            login(self.request, form.get_user())
-            return super(Login,self).form_valid(form)
         
 class Logout(APIView):
-    def get(self,request, format = None):
-        request.user.auth_token.delete()
+    def post(self, request):
         logout(request)
-        return Response(status = status.HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK)

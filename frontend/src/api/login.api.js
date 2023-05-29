@@ -1,8 +1,38 @@
 import axios from 'axios';
 
+
+
 export const login = async (cedula, password) => {
     try {
-      const response = await axios.post('http://localhost:8000/login/usuario/', { cedula, password });
+
+      const [values, setValues] = useState({
+        email: '',
+        password: '',
+      })
+    
+    
+      const peticion_login = async () => {
+        const response = await axios({
+          url: 'http://localhost:8000/login/',
+          method: 'POST',
+          headers: {
+              'Content-type': 'application/json'
+          },
+          data: JSON.stringify( { 
+            cedula: values.cedula, 
+            password: values.password 
+          })
+        });
+        console.log(response)    
+        console.log(response.data)
+      }
+    
+      const loginSubmit = async (e) => {      
+        e.preventDefault();    
+        peticion_login(); 
+      }
+
+      //const response = await axios.post('http://localhost:8000/login_user/', headers: { 'Content-type': 'application/json' }, { cedula, password });
       const { token, user } = response.data;
   
       // Almacena el token y el usuario en el almacenamiento local

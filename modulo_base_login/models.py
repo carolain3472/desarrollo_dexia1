@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.exceptions import ValidationError
 from django.db import models
+from rest_framework.authtoken.models import Token
 
 class MyUserManager(BaseUserManager):
     def create_user(self, cedula, password=None, **extra_fields):

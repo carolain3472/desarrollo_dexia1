@@ -17,14 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken import views
-from modulo_base_login.views import Login,Logout
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', include(('modulo_base_login.urls', 'default'))),
-    path('api_generate_token/', views.obtain_auth_token), #SOlo es aceptado por el método post
-    path('login_user/',Login.as_view(), name = 'login'),
-    path('logout/', Logout.as_view()),
+    path('api_generate_token/', views.obtain_auth_token) #SOlo es aceptado por el método post
 ]

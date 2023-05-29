@@ -94,6 +94,15 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'modulo_base_login.CustomUser'
 
+REST_FRAMEWORK ={
+'DEFAULT_PERMISSION_CLASSES': (
+    'rest_framework.permissions.IsAuthenticated',
+),
+
+'DEFAULT_AUTHENTICATION_CLASSES':(
+    'rest_framework.authentication.SessionAuthentication',
+),
+}
 
 
 # Password validation
@@ -138,6 +147,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [ 'http://localhost:5173']
+
+CORS_ALLOW_CREDENTIALS= True
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',

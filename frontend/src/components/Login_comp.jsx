@@ -34,8 +34,9 @@ export const LoginComp = () => {
 
   return (
     <div id='form-box'> 
-
+  
       <form onSubmit={handleSubmit}>
+      
       <input id='cedula'
         type="text"
         placeholder="Cédula"
