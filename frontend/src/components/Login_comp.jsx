@@ -4,8 +4,12 @@ import "bootstrap/dist/css/bootstrap.css";
 //import 'bootstrap/dist/css/bootstrap'
 import formularioImage from '../images/formulario_image.jpg'; // Ruta relativa de la imagen
 import dexiaLogo from '../images/dexia_logo.png'; // Ruta relativa de la imagen
+import { api } from "../api/register_api";
+import { useNavigate } from "react-router-dom";
+
 
 export const Formulario = () => {
+  const navigate = useNavigate();
   const [cedula, setCedula] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,18 +22,20 @@ export const Formulario = () => {
   };
 
   const handleSubmit = (event) => {
+    
     event.preventDefault();
+
 
     // Enviar la solicitud POST al backend
     axios
-      .post("http://localhost:8000/login/login_view/", { cedula, password })
+      api.post("/login/login_view/", { cedula, password })
       .then((response) => {
         // Manejar la respuesta del backend
         if (response.data.valid) {
           // Redirigir a otra página
           sessionStorage.setItem("nombre", response.data.nombre);
           sessionStorage.setItem('cedula',cedula);
-          window.location.href = "http://localhost:5173/next";
+          navigate('/next')
         } else {
           // Mostrar un mensaje de error o realizar alguna otra acción en caso de respuesta negativa
           console.log("No lo pudo validar");

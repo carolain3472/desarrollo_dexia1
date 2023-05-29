@@ -16,18 +16,19 @@ class MyUserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, cedula, password=None, **extra_fields):
+    def create_superuser(self, cedula, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         
-        """ first_name = extra_fields.get('first_name')
+        first_name = extra_fields.get('first_name')
         primer_apellido = extra_fields.get('primer_apellido')
-        
+        segundo_apellido = extra_fields.get('segundo_apellido')
+
         if not first_name or not primer_apellido:
             raise ValueError('El nombre y apellido son requeridos para crear un superusuario')
         
-        password = f"{first_name[0].upper()}{cedula}{primer_apellido[0].upper()}"
-        extra_fields['password'] = password """
+     #   password = f"{first_name[0].upper()}{cedula}{primer_apellido[0].upper()}"
+       # extra_fields['password'] = password 
         
         return self.create_user(cedula, password, **extra_fields)
 
@@ -41,6 +42,7 @@ class CustomUser(AbstractUser):
     })
 
     email = models.EmailField(null=False)
+
     primer_apellido = models.CharField(max_length=30, blank=True)
     segundo_apellido = models.CharField(max_length=30, blank=True)
     is_active = models.BooleanField(default=True)

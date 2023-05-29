@@ -17,10 +17,11 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.permissions import AllowAny
 
 from .serializer import UsuarioSerializer
 from rest_framework import viewsets
-
+from django.contrib.auth.hashers import make_password
 
 from .models import CustomUser
 
@@ -91,3 +92,51 @@ class LoginView(APIView):
             raise AuthenticationFailed('Las credenciales proporcionadas son inválidas.')
 
         return Response({'valid': False})
+    
+
+
+
+class RegisterUserView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def post(self, request):
+        serializer = UsuarioSerializer(data=request.data)
+        nombre= request.data.get('first_name')
+        email= request.data.get('email')
+        primer_apellido=request.data.get('primer_apellido')
+        segundo_apellido= request.data.get('segundo_apellido')
+        cedula= request.data.get("cedula")
+        cedula_acceso= request.data.get("cedula_acceso")
+
+        try:
+
+
+            user = CustomUser.objects.get(cedula=cedula_acceso)
+
+            token_exists = Token.objects.filter(user=user).exists()
+
+            if token_exists:
+
+                print(nombre)
+                print(email)
+                print(primer_apellido)
+                print(segundo_apellido)
+                print("Entró")
+
+            # Crear el superusuario
+                superuser = CustomUser.objects.create_superuser(
+                cedula=cedula,
+                password=None,
+                first_name=nombre,
+                primer_apellido=primer_apellido,
+                segundo_apellido=segundo_apellido,
+                email=email
+    )
+            
+            
+            return Response(status=status.HTTP_200_OK)
+        except:
+             return Response(status=status.HTTP_404_NOT_FOUND)
+        
+       

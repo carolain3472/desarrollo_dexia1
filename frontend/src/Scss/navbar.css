@@ -131,7 +131,10 @@ h1, .h1 {
     -webkit-flex-grow: 2;
     -ms-flex-positive: 2;
     flex-grow: 2;
-    padding: 25px;
+
+
+    margin-top: -500px; /* Reduce el margen superior para mover el componente hacia arriba */
+    padding: 20px; 
 }
 
 .dashboard-nav {
@@ -176,10 +179,11 @@ h1, .h1 {
 
 .dashboard-nav a:hover {
     text-decoration: none;
+    background-color: #b43e3e;
 }
 
 .dashboard-nav {
-    background-color: #aa291d;
+    background-color: #9d261b;
 }
 
 .dashboard-nav a {
