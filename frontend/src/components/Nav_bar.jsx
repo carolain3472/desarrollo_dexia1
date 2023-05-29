@@ -5,8 +5,10 @@ import { faBars, faAnchor, faHome, faTachometerAlt, faFileUpload, faPhotoVideo, 
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import React, { useEffect, useState } from 'react';
 import { mobileScreen } from '../api/navbar'; // Importa mobileScreen desde el archivo navbar.js
-import axios from 'axios';
+import axios, { all } from 'axios';
 import { Button, Modal } from "react-bootstrap";
+import { useNavigate, useLocation  } from 'react-router-dom';
+import { api } from "../api/register_api";
 
 export function NavbarAdmin() {
   const storedCel = sessionStorage.getItem('nombre');
@@ -51,11 +53,12 @@ export function NavbarAdmin() {
     console.log(cedulaUser)
 
     axios
-      .post("http://localhost:8000/logout/", { cedula: cedulaUser })
+      api.post("/logout/", { cedula: cedulaUser })
       .then((response) => {
         console.log("Logout exitoso");
         sessionStorage.removeItem("cedula");
-        window.location.href = "http://localhost:5173/login/";
+        sessionStorage.removeItem(all)
+        navigate('/login')
       })
       .catch((error) => {
         console.error("Error al realizar el logout", error);
@@ -72,6 +75,28 @@ export function NavbarAdmin() {
     setShowModal(false);
   };
 
+
+  const [showAdditionalContent, setShowAdditionalContent] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const redireccionar = () => {
+    navigate('/registro'); // Redireccionar a la página de registro
+  };
+
+  const redireccionarInicio = () => {
+    navigate('/inicio'); // Redireccionar a la página de registro
+  };
+
+  useEffect(() => {
+    // Verificar si la ubicación actual es la página de registro
+    if (location.pathname === '/registro') {
+      setShowAdditionalContent(true);
+    } else {
+      setShowAdditionalContent(false);
+    }
+  }, [location]);
+
   return (
     <div className='dashboard'>
       <div className='dashboard-nav'>
@@ -80,63 +105,73 @@ export function NavbarAdmin() {
             <FontAwesomeIcon icon={faBars} />
           </a>
           <a href='#!' className='brand-logo'>
-            <FontAwesomeIcon icon={faBuildingColumns} style={{ color: "#ffffff" }} /> <span>DEXIA</span>
+            <FontAwesomeIcon icon={faBuildingColumns} style={{ color: "#ffffff", marginRight: "16px"}} /> <span>DEXIA</span>
           </a>
         </header>
         <nav className='dashboard-nav-list'>
-          <a href='#!' className='dashboard-nav-item'>
-            <FontAwesomeIcon icon={faHome} /> Home
+          <a onClick={redireccionarInicio} className='dashboard-nav-item'>
+            <FontAwesomeIcon icon={faHome} style={{ color: "#ffffff", marginRight: "16px"}} /> Inicio
           </a>
           <a href='#!' className='dashboard-nav-item active'>
-            <FontAwesomeIcon icon={faTachometerAlt} /> Informes
+            <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "#ffffff", marginRight: "16px"}}  /> Informes
           </a>
           <a href='#!' className='dashboard-nav-item'>
-            <FontAwesomeIcon icon={faFileUpload} /> Carga masiva
+            <FontAwesomeIcon icon={faFileUpload} style={{ color: "#ffffff", marginRight: "16px"}}  /> Carga masiva
           </a>
           <div className='dashboard-nav-dropdown'>
-            <a href='#!' className='dashboard-nav-item'>
-              <FontAwesomeIcon icon={faUser} /> Registrar usuario
+            <a  onClick={redireccionar} href='#!' className='dashboard-nav-item'>
+              <FontAwesomeIcon icon={faUser} style={{ color: "#ffffff", marginRight: "16px"}}  /> Registrar usuario
             </a>
           </div>
           <div className='dashboard-nav-dropdown'>
             <a href='#!' className='dashboard-nav-item dashboard-nav-dropdown-toggle'>
-              <FontAwesomeIcon icon={faUsers} /> Usuarios
+              <FontAwesomeIcon icon={faUsers} style={{ color: "#ffffff", marginRight: "16px"}} /> Usuarios
             </a>
             <div className='dashboard-nav-dropdown-menu'>
               <a href='#!' className='dashboard-nav-dropdown-item'>Todos</a>
-              <a href='#!' className='dashboard-nav-dropdown-item'>Activos</a>
-              <a href='#!' className='dashboard-nav-dropdown-item'>Inactivos</a>
               <a href='#!' className='dashboard-nav-dropdown-item'>Estudiantes</a>
               <a href='#!' className='dashboard-nav-dropdown-item'>Consejeros</a>
             </div>
           </div>
           <a href='#!' className='dashboard-nav-item'>
-            <FontAwesomeIcon icon={faCogs} /> Perfil
+            <FontAwesomeIcon icon={faCogs} style={{ color: "#ffffff", marginRight: "16px"}}  /> Perfil
           </a>
           <div className='nav-item-divider'></div>
           <a  onClick={handleModalOpen} className='dashboard-nav-item'>
-            <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+            <FontAwesomeIcon icon={faSignOutAlt} style={{ color: "#ffffff", marginRight: "16px"}} /> Salir
           </a>
         </nav>
       </div>
+
+
       <div className='dashboard-app'>
-        <header className='dashboard-toolbar'>
-          <a href='#!' className='menu-toggle'>
-            <FontAwesomeIcon icon={faBars} />
-          </a>
-        </header>
-        <div className='dashboard-content'>
-          <div className='container'>
-            <div className='card'>
-              <div className='card-header'>
-                <h1>Bienvenid@ {storedCel}</h1>
+          <header className='dashboard-toolbar'>
+            <a href='#!' className='menu-toggle'>
+              <FontAwesomeIcon icon={faBars} />
+            </a>
+          </header>
+          </div>
+      
+     {/*    <div className='dashboard-app'>
+          <header className='dashboard-toolbar'>
+            <a href='#!' className='menu-toggle'>
+              <FontAwesomeIcon icon={faBars} />
+            </a>
+          </header>
+          <div className='dashboard-content'>
+            <div className='container'>
+              <div className='card'>
+                <div className='card-header'>
+                  <h1>Bienvenid@ {storedCel}</h1>
+                </div>
+                <div className='card-body'>
+                  <p>Estás dentro del sistema como: Administrador</p>
+                </div>
               </div>
-              <div className='card-body'>
-                <p>Estás dentro del sistema como: Administrador</p>
-              </div>
-
-          
-
+            </div>
+          </div>
+  </div> */}
+    
               <Modal show={showModal} onHide={handleModalClose} centered backdrop="static">
   <Modal.Header>
     <Modal.Title>Salir de la sesión</Modal.Title>
@@ -153,9 +188,6 @@ export function NavbarAdmin() {
 </Modal>
 
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          
   );
 }
