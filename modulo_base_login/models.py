@@ -2,6 +2,11 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.exceptions import ValidationError
 from django.db import models
 
+
+class Role(models.Model):
+    nombre_rol = models.CharField(max_length=30, blank=False, unique=True, null=False)
+    descripcion_rol = models.CharField(max_length=200, blank=False, null=False)
+
 class MyUserManager(BaseUserManager):
     def create_user(self, cedula, password=None, **extra_fields):
         if not cedula:
@@ -46,6 +51,7 @@ class CustomUser(AbstractUser):
     primer_apellido = models.CharField(max_length=30, blank=True)
     segundo_apellido = models.CharField(max_length=30, blank=True)
     is_active = models.BooleanField(default=True)
+    rol = models.foreingKey(Role, on_delete=models.CASCADE)
 
     username = None
 
@@ -56,6 +62,7 @@ class CustomUser(AbstractUser):
         'first_name', 
         'primer_apellido', 
         'email', 
+        'rol'
     ]
 
     def __str__(self):

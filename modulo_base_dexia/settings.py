@@ -87,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'dexia',
         'USER' : 'postgres',
-        'PASSWORD' : 'nando',
+        'PASSWORD' : '123456',
         'HOST' : 'localhost',
         'DATABASE_PORT' : '5432',
 }
