@@ -1,0 +1,45 @@
+.note {
+  text-align: center;
+  height: 80px;
+  background: -webkit-linear-gradient(left, #671414, #ff2424);
+  color: #fff;
+  font-weight: bold;
+  line-height: 80px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.form-content {
+  padding: 20px;
+  border: 1px solid #ced4da;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  margin-bottom: 2%;
+}
+.form-control {
+  border-radius: 1.5rem;
+}
+.btnSubmit {
+  border: none;
+  border-radius: 1.5rem;
+  padding: 1%;
+  width: 20%;
+  cursor: pointer;
+  background: #cc0000;
+  color: #fff;
+}
+
+.selectTypeUser {
+  border-radius: 10px;
+  color: grey;
+  height: 100%;
+  padding: 5px;
+  width: 100%;
+}
+
+.disabledOption {
+  color: grey;
+}
+
+.selectedOption {
+  color: black;
+}
