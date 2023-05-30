@@ -78,11 +78,7 @@ export function Register_form() {
 
     
     <div className='dashboard-app' style={{ marginTop: 0, paddingTop: 0 }} >
-        <header className='dashboard-toolbar'>
-          <a href='#!' className='menu-toggle'>
-            <FontAwesomeIcon icon={faBars} />
-          </a>
-        </header>
+
         <div className='dashboard-content'>
           <div className='container'>
             <div className='card'>

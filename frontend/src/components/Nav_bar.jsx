@@ -144,13 +144,6 @@ export function NavbarAdmin() {
       </div>
 
 
-      <div className='dashboard-app'>
-          <header className='dashboard-toolbar'>
-            <a href='#!' className='menu-toggle'>
-              <FontAwesomeIcon icon={faBars} />
-            </a>
-          </header>
-          </div>
       
      {/*    <div className='dashboard-app'>
           <header className='dashboard-toolbar'>
