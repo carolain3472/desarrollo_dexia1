@@ -51,7 +51,7 @@ class CustomUser(AbstractUser):
     primer_apellido = models.CharField(max_length=30, blank=True)
     segundo_apellido = models.CharField(max_length=30, blank=True)
     is_active = models.BooleanField(default=True)
-    rol = models.foreingKey(Role, on_delete=models.CASCADE)
+    rol = models.ForeignKey(Role, on_delete=models.CASCADE)
 
     username = None
 
