@@ -19,7 +19,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import React, { useEffect, useState } from "react";
 import { mobileScreen } from "../api/navbar"; // Importa mobileScreen desde el archivo navbar.js
 import axios, { all } from "axios";
-import dexiaLogo from "../images/dexia_logo.png";
+import dexiaLogo from "../images/logo_dexia_blanco.png";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { api } from "../api/register_api";
