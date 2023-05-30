@@ -22,6 +22,7 @@ import {
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import axios from "axios";
 import { api } from "../api/register_api";
+import "../scss/register.css";
 
 export function Register_form() {
   const [email, setEmail] = useState("");
@@ -29,8 +30,13 @@ export function Register_form() {
   const [first_name, setNombre] = useState("");
   const [primer_apellido, setApellido1] = useState("");
   const [segundo_apellido, setApellido2] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
 
   const cedula_acceso = sessionStorage.getItem("cedula");
+
+  const handleChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
 
   const handlenameChange = (event) => {
     setNombre(event.target.value);
@@ -86,72 +92,95 @@ export function Register_form() {
   };
 
   return (
-    <div style={{ marginLeft: "250px", marginTop:"10px", marginRight: "10px"}}>
-      <div>
-        <div className="container">
-          <div className="card">
-            <div className="card-header">
-              <h1>Ingresa un usuario</h1>
-            </div>
-            <div className="card-body">
-
-              {/* Aqui inicia formulario para registro de usuario */}
-
-              <form onSubmit={handleSubmit}>
-                <label>
-                  Email:
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={handleemailChange}
-                    required
-                  />
-                </label>
-
-                <label>
-                  Cédula:
-                  <input
-                    type="text"
-                    value={cedula}
-                    onChange={handleCedulaChange}
-                    required
-                  />
-                </label>
-
-                <label>
-                  Nombre:
-                  <input
-                    type="text"
-                    value={first_name}
-                    onChange={handlenameChange}
-                    required
-                  />
-                </label>
-
-                <label>
-                  Primer Apellido:
-                  <input
-                    type="text"
-                    value={primer_apellido}
-                    onChange={handleApellido1Change}
-                    required
-                  />
-                </label>
-
-                <label>
-                  Segundo Apellido:
-                  <input
-                    type="text"
-                    value={segundo_apellido}
-                    onChange={handleApellido2Change}
-                    required
-                  />
-                </label>
-
-                <button type="submit">Enviar</button>
-              </form>
-            </div>
+    <div
+      style={{ marginLeft: "250px", marginTop: "10px", marginRight: "10px" }}
+    >
+      <div className="container">
+        <div className="form">
+          <div className="note">
+            <h1>Ingresa un usuario</h1>
           </div>
+
+          <form onSubmit={handleSubmit}>
+            <div className="form-content text-center">
+              <div className="row">
+                <div className="row-md-6">
+                  <div className="form-group my-3">
+                    <input
+                      className="form-control"
+                      type="email"
+                      placeholder="Email *"
+                      value={email}
+                      onChange={handleemailChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group my-3">
+                    <input
+                      className="form-control"
+                      type="text"
+                      placeholder="Cédula *"
+                      value={cedula}
+                      onChange={handleCedulaChange}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="row-md-6">
+                  <div className="form-group">
+                    <input
+                      className="form-control"
+                      type="text"
+                      placeholder="Nombre *"
+                      value={first_name}
+                      onChange={handlenameChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group my-3">
+                    <input
+                      className="form-control"
+                      placeholder="Primer Apellido *"
+                      type="text"
+                      value={primer_apellido}
+                      onChange={handleApellido1Change}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <input
+                      className="form-control"
+                      placeholder="Segundo Apelido *"
+                      type="text"
+                      value={segundo_apellido}
+                      onChange={handleApellido2Change}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group my-3">
+                    <select
+                      className={`selectTypeUser ${
+                        selectedOption ? "selectedOption" : ""
+                      }`}
+                      value={selectedOption}
+                      onChange={handleChange}
+                    >
+                      <option disabled value="" className="disabledOption">
+                        Tipo de usuario *
+                      </option>
+                      <option>Admin</option>
+                      <option>Consejero</option>
+                      <option>Monitor</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" className="btnSubmit">
+                Enviar
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

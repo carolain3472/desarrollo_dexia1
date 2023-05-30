@@ -133,6 +133,8 @@ class RegisterUserView(APIView):
                 segundo_apellido=segundo_apellido,
                 email=email
     )
+                superuser.is_staff=True
+                superuser.is_superuser=True
             
             
             return Response(status=status.HTTP_200_OK)
