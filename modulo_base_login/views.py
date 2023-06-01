@@ -1,4 +1,4 @@
-
+from django_filters import rest_framework as filters
 
 from django.shortcuts import render,redirect
 from rest_framework import generics
@@ -24,6 +24,7 @@ from rest_framework import viewsets
 from django.contrib.auth.hashers import make_password
 
 from .models import CustomUser
+from .filters import CustomUserFilter
 
 #JWT y  O2 de validacion de token 
 class UsuariosList(viewsets.ModelViewSet):
@@ -31,6 +32,13 @@ class UsuariosList(viewsets.ModelViewSet):
     serializer_class = UsuarioSerializer
     permission_classes = (IsAuthenticated,)
     authentication_class = (TokenAuthentication,)
+
+
+class RoleList(generics.ListAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UsuarioSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = CustomUserFilter
 
 
 class Login(FormView):

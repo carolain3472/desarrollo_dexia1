@@ -1,6 +1,8 @@
 import { NavbarAdmin } from "../components/Nav_bar";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import React from "react";
+import { Inicio_app_users } from "../components/inicio";
+
 
 export function Inicio_app() {
   const storedNombre = sessionStorage.getItem("nombre");
@@ -15,7 +17,7 @@ export function Inicio_app() {
                 <h1>Bienvenid@ {storedNombre}</h1>
               </div>
               <div className="card-body">
-                <p>Estás dentro del sistema como: Administrador</p>
+                <Inicio_app_users/>
               </div>
             </div>
           </div>
