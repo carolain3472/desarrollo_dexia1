@@ -3,7 +3,9 @@ import { Login_template } from './pages/Login_template'
 import {Next} from './pages/Next'
 import { Registro } from './pages/registro';
 import "./Scss/login.css";
+import "./Scss/tabla.css"
 import {Inicio_app} from './pages/inicio_app'
+import { UsuariosList_all } from './pages/usuariosList';
 
 
 function App() {
@@ -15,6 +17,9 @@ function App() {
       <Route path='/next' element ={<Next/>} />
       <Route path='/registro' element ={<Registro/>} />
       <Route path='/inicio' element ={<Inicio_app/>} />
+      <Route path='/usuarios_Lista' element ={<UsuariosList_all/>} />
+
+      
     </Routes>
 
   </BrowserRouter>

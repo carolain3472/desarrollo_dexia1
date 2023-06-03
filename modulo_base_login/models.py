@@ -52,7 +52,7 @@ class CustomUser(AbstractUser):
     primer_apellido = models.CharField(max_length=30, blank=True)
     segundo_apellido = models.CharField(max_length=30, blank=True)
     is_active = models.BooleanField(default=True)
-    role = models.CharField(choices=CHOICES_ROLE, max_length=30, default=None, blank=False, null=False)
+    role = models.CharField(choices=CHOICES_ROLE, max_length=30, default='Administrador', blank=False, null=False)
 
     username = None
 

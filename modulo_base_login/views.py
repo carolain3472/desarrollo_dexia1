@@ -28,10 +28,25 @@ from .filters import CustomUserFilter
 
 #JWT y  O2 de validacion de token 
 class UsuariosList(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.all()
-    serializer_class = UsuarioSerializer
-    permission_classes = (IsAuthenticated,)
-    authentication_class = (TokenAuthentication,)
+    def post(self, request):
+        serializer = UsuarioSerializer(data=request.data)
+        cedula_acceso= request.data.get("cedula_acceso")
+
+        try:
+
+            user = CustomUser.objects.get(cedula=cedula_acceso)
+            token_exists = Token.objects.filter(user=user).exists()
+
+            if token_exists:
+                queryset = CustomUser.objects.all()
+                serializer_class = UsuarioSerializer(queryset, many=True)
+            return Response(serializer_class.data, status=status.HTTP_200_OK)
+
+            
+        except:
+             return Response(status=status.HTTP_404_NOT_FOUND)
+        
+
 
 
 class RoleList(generics.ListAPIView):

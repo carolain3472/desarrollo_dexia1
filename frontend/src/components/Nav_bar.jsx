@@ -112,6 +112,11 @@ export function NavbarAdmin() {
     }
   }, [location]);
 
+  const  redireccionar_lista_user = () => {
+    navigate("/usuarios_Lista"); // Redireccionar a la página de registro
+  };
+
+
   return (
     <div className="dashboard-nav">
       <header>
@@ -173,6 +178,7 @@ export function NavbarAdmin() {
         </div>
         <div className="dashboard-nav-dropdown">
           <a
+            onClick={redireccionar_lista_user}
             href="#!"
             className={`dashboard-nav-item dashboard-nav-dropdown-toggle ${
               location.pathname.startsWith("/usuarios") ? "active" : ""
@@ -187,6 +193,7 @@ export function NavbarAdmin() {
           <div className="dashboard-nav-dropdown-menu">
             <a
               href="#!"
+              onClick={redireccionar_lista_user}
               className={`dashboard-nav-dropdown-item ${
                 location.pathname === "/usuarios/todos" ? "active" : ""
               }`}

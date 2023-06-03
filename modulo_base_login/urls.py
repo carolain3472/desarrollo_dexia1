@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .views import LoginView
 from .views import RegisterUserView
 from .views import RoleList
+from .views import UsuariosList
 
 from rest_framework.documentation import include_docs_urls
 
@@ -19,7 +20,8 @@ urlpatterns = [
     path('docs/', include_docs_urls(title="modulo API")),
     path('login_view/', LoginView.as_view(), name='login_view'),
     path('registro', RegisterUserView.as_view(), name="Registro"),
-    path('listar_rol/', RoleList.as_view(), name="roles")
+    path('listar_rol/', RoleList.as_view(), name="roles"),
+    path('usuarios/', UsuariosList.as_view({'get': 'list'}), name='usuarios-list'),
 
 ]
 
