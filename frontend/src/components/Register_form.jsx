@@ -30,12 +30,14 @@ export function Register_form() {
   const [first_name, setNombre] = useState("");
   const [primer_apellido, setApellido1] = useState("");
   const [segundo_apellido, setApellido2] = useState("");
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedRol, setSelectedRol] = useState("");
 
   const cedula_acceso = sessionStorage.getItem("cedula");
 
   const handleChange = (event) => {
-    setSelectedOption(event.target.value);
+    const selectedValue = event.target.value;
+    console.log (selectedRol);
+    setSelectedRol(selectedValue);
   };
 
   const handlenameChange = (event) => {
@@ -72,6 +74,7 @@ export function Register_form() {
         first_name,
         cedula,
         email,
+        rol: selectedRol,
         primer_apellido,
         segundo_apellido,
         cedula_acceso,
@@ -159,21 +162,19 @@ export function Register_form() {
                   </div>
 
                   <div className="form-group my-3">
-                    <select
-                      className={`selectTypeUser ${
-                        selectedOption ? "selectedOption" : ""
-                      }`}
-                      value={selectedOption}
+                  <select
+                      className={`selectTypeUser ${selectedRol ? "selectedRol" : ""}`}
+                      value={selectedRol}
                       onChange={handleChange}
                     >
                       <option disabled value="" className="disabledOption">
                         Tipo de usuario *
                       </option>
-                      <option>Admin</option>
-                      <option>Consejero</option>
-                      <option>Monitor</option>
+                      <option value="Administrador">Administrador</option>
+                      <option value="Consejero">Consejero</option>
+                      <option value="Monitor">Monitor</option>
                     </select>
-                  </div>
+                    </div>
                 </div>
               </div>
               <button type="submit" className="btnSubmit">
