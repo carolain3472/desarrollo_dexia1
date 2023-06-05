@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'coreapi',
     'django_filters',
 
-    'modulo_base_login'
+    'modulo_base_login',
+    'modulo_dexia_estudiantes'
 ]
 
 
@@ -88,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'dexia',
         'USER' : 'postgres',
-        'PASSWORD' : 'carolain',
+        'PASSWORD' : '123456',
         'HOST' : 'localhost',
         'DATABASE_PORT' : '5432',
 }
