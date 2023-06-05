@@ -30,21 +30,43 @@ from .filters import CustomUserFilter
 class UsuariosList(viewsets.ModelViewSet):
     def post(self, request):
         serializer = UsuarioSerializer(data=request.data)
-        cedula_acceso= request.data.get("cedula_acceso")
+        cedula_acceso = request.data.get("cedula_acceso")
 
         try:
-
             user = CustomUser.objects.get(cedula=cedula_acceso)
             token_exists = Token.objects.filter(user=user).exists()
 
             if token_exists:
                 queryset = CustomUser.objects.all()
-                serializer_class = UsuarioSerializer(queryset, many=True)
-            return Response(serializer_class.data, status=status.HTTP_200_OK)
 
-            
-        except:
-             return Response(status=status.HTTP_404_NOT_FOUND)
+                is_active = request.data.get("is_active")
+                apellido = request.data.get("apellido")
+                nombre = request.data.get("nombre")
+                rol = request.data.get("rol")
+
+                # Crear una lista de filtros a aplicar
+                filters = Q()
+
+                # Agregar los filtros según los parámetros proporcionados
+                if is_active is not None:
+                    filters &= Q(is_active=is_active)
+                if apellido:
+                    filters &= Q(apellido__icontains=apellido)
+                if nombre:
+                    filters &= Q(nombre__icontains=nombre)
+                if rol:
+                    filters &= Q(rol=rol)
+
+                # Aplicar los filtros a la consulta de usuarios
+                queryset = queryset.filter(filters)
+
+                serializer = UsuarioSerializer(queryset, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except CustomUser.DoesNotExist:
+            pass
+
+        return Response(status=status.HTTP_404_NOT_FOUND)
         
 
 
