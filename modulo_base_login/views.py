@@ -18,6 +18,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import AllowAny
+from django.db.models import Q
 
 from .serializer import UsuarioSerializer
 from rest_framework import viewsets
@@ -43,6 +44,7 @@ class UsuariosList(viewsets.ModelViewSet):
                 apellido = request.data.get("apellido")
                 nombre = request.data.get("nombre")
                 rol = request.data.get("rol")
+                cedula = request.data.get("cedula")
 
                 # Crear una lista de filtros a aplicar
                 filters = Q()
@@ -51,12 +53,18 @@ class UsuariosList(viewsets.ModelViewSet):
                 if is_active is not None:
                     filters &= Q(is_active=is_active)
                 if apellido:
-                    filters &= Q(apellido__icontains=apellido)
+                    filters &= Q(primer_apellido__icontains=apellido)
                 if nombre:
-                    filters &= Q(nombre__icontains=nombre)
-                if rol:
-                    filters &= Q(rol=rol)
-
+                    filters &= Q(first_name__icontains=nombre)
+                    ##o filters &= Q(nombre__startswith=nombre)
+                if rol == "Consejero":
+                     filters &= Q(role="Consejero")
+                if rol == "Administrador":
+                     filters &= Q(role="Administrador")
+                if rol == "Monitor":
+                     filters &= Q(role="Monitor")
+                if cedula:
+                    filters &= Q(cedula__startswith=cedula)
                 # Aplicar los filtros a la consulta de usuarios
                 queryset = queryset.filter(filters)
 
@@ -140,7 +148,6 @@ class LoginView(APIView):
     
 
 
-
 class RegisterUserView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
@@ -153,6 +160,7 @@ class RegisterUserView(APIView):
         segundo_apellido= request.data.get('segundo_apellido')
         cedula= request.data.get("cedula")
         cedula_acceso= request.data.get("cedula_acceso")
+        rol= request.data.get("rol")
 
         try:
 
@@ -167,6 +175,7 @@ class RegisterUserView(APIView):
                 print(email)
                 print(primer_apellido)
                 print(segundo_apellido)
+                print(rol)
                 print("Entró")
 
             # Crear el superusuario
@@ -176,7 +185,8 @@ class RegisterUserView(APIView):
                 first_name=nombre,
                 primer_apellido=primer_apellido,
                 segundo_apellido=segundo_apellido,
-                email=email
+                email=email,
+                role= rol,
     )
                 superuser.is_staff=True
                 superuser.is_superuser=True
@@ -187,3 +197,35 @@ class RegisterUserView(APIView):
              return Response(status=status.HTTP_404_NOT_FOUND)
         
        
+class cambiarEstado(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def post(self, request):
+        serializer = UsuarioSerializer(data=request.data)
+        cedula_acceso= request.data.get("cedula_acceso")
+        cedula_cambio= request.data.get("cedula_cambio")
+
+        try:
+
+
+            user = CustomUser.objects.get(cedula=cedula_acceso)
+
+            token_exists = Token.objects.filter(user=user).exists()
+
+            if token_exists:
+                print(cedula_cambio)
+                userCambio = CustomUser.objects.get(cedula=cedula_cambio)
+                estado= userCambio.is_active
+
+                if estado:
+                    userCambio.is_active=False
+                    userCambio.save()
+                else:
+                    userCambio.is_active=True
+                    userCambio.save()
+            
+            
+            return Response(status=status.HTTP_200_OK)
+        except:
+             return Response(status=status.HTTP_404_NOT_FOUND)

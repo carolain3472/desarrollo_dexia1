@@ -6,6 +6,7 @@ from .views import LoginView
 from .views import RegisterUserView
 from .views import RoleList
 from .views import UsuariosList
+from .views import cambiarEstado
 
 from rest_framework.documentation import include_docs_urls
 
@@ -22,6 +23,7 @@ urlpatterns = [
     path('registro', RegisterUserView.as_view(), name="Registro"),
     path('listar_rol/', RoleList.as_view(), name="roles"),
     path('usuarios/', UsuariosList.as_view({'get': 'list'}), name='usuarios-list'),
+    path('usuarioCambio/', cambiarEstado.as_view(), name='usuarioCambio'),
 
 ]
 

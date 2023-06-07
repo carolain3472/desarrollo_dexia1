@@ -30,50 +30,19 @@ export function Register_form() {
   const [first_name, setNombre] = useState("");
   const [primer_apellido, setApellido1] = useState("");
   const [segundo_apellido, setApellido2] = useState("");
-  const [selectedRol, setSelectedRol] = useState("");
-
-  const cedula_acceso = sessionStorage.getItem("cedula");
-
-  const handleChange = (event) => {
-    const selectedValue = event.target.value;
-    console.log (selectedRol);
-    setSelectedRol(selectedValue);
-  };
-
-  const handlenameChange = (event) => {
-    setNombre(event.target.value);
-  };
-
-  const handleemailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleCedulaChange = (event) => {
-    setCedula(event.target.value);
-  };
-
-  const handleApellido1Change = (event) => {
-    setApellido1(event.target.value);
-  };
-
-  const handleApellido2Change = (event) => {
-    setApellido2(event.target.value);
-  };
-
+  const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
-  //navigate("/login");
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = (data) => {
+    const { email, cedula, first_name, primer_apellido, segundo_apellido, selectedRol } = data;
+    const cedula_acceso = sessionStorage.getItem("cedula");
 
     // Enviar la solicitud POST al backend
-    axios;
     api
       .post("/login/registro", {
-        first_name,
-        cedula,
         email,
+        cedula,
+        first_name,
         rol: selectedRol,
         primer_apellido,
         segundo_apellido,
@@ -104,7 +73,7 @@ export function Register_form() {
             <h1>Ingresa un usuario</h1>
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-content text-center">
               <div className="row">
                 <div className="row-md-6">
@@ -113,8 +82,7 @@ export function Register_form() {
                       className="form-control"
                       type="email"
                       placeholder="Email *"
-                      value={email}
-                      onChange={handleemailChange}
+                      {...register("email")}
                       required
                     />
                   </div>
@@ -123,8 +91,7 @@ export function Register_form() {
                       className="form-control"
                       type="text"
                       placeholder="Cédula *"
-                      value={cedula}
-                      onChange={handleCedulaChange}
+                      {...register("cedula")}
                       required
                     />
                   </div>
@@ -135,8 +102,7 @@ export function Register_form() {
                       className="form-control"
                       type="text"
                       placeholder="Nombre *"
-                      value={first_name}
-                      onChange={handlenameChange}
+                      {...register("first_name")}
                       required
                     />
                   </div>
@@ -145,8 +111,7 @@ export function Register_form() {
                       className="form-control"
                       placeholder="Primer Apellido *"
                       type="text"
-                      value={primer_apellido}
-                      onChange={handleApellido1Change}
+                      {...register("primer_apellido")}
                       required
                     />
                   </div>
@@ -155,17 +120,16 @@ export function Register_form() {
                       className="form-control"
                       placeholder="Segundo Apelido *"
                       type="text"
-                      value={segundo_apellido}
-                      onChange={handleApellido2Change}
-                      required
+                      {...register("segundo_apellido")}
+                      
                     />
                   </div>
 
                   <div className="form-group my-3">
-                  <select
-                      className={`selectTypeUser ${selectedRol ? "selectedRol" : ""}`}
-                      value={selectedRol}
-                      onChange={handleChange}
+                    <select
+                      className="selectTypeUser"
+                      {...register("selectedRol")}
+                      required
                     >
                       <option disabled value="" className="disabledOption">
                         Tipo de usuario *
@@ -174,7 +138,7 @@ export function Register_form() {
                       <option value="Consejero">Consejero</option>
                       <option value="Monitor">Monitor</option>
                     </select>
-                    </div>
+                  </div>
                 </div>
               </div>
               <button type="submit" className="btnSubmit">
@@ -187,3 +151,10 @@ export function Register_form() {
     </div>
   );
 }
+
+
+
+
+
+
+

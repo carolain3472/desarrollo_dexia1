@@ -8,14 +8,61 @@ export function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const cedula_acceso = sessionStorage.getItem("cedula");
   const [selectedOption, setSelectedOption] = useState("");
+  const [selectedRol, setSelectedRol] = useState("");
+  const [cedulaFiltro, setCedulaFiltro] = useState("");
+  const [nombreFiltro, setNombreFiltro] = useState("");
+  const [apellidoFiltro, setApellidoFiltro] = useState("");
 
+  const toggleEstadoUsuario = (cedula) => {
+    console.log(cedula);
+    setUsuarios((prevUsuarios) =>
+      prevUsuarios.map((usuario) =>
+        usuario.cedula === cedula
+          ? { ...usuario, is_active: !usuario.is_active }
+          : usuario
+      )
+    );
 
+    api
+      .post("/login/usuarioCambio/", {
+        cedula_acceso: cedula_acceso,
+        cedula_cambio: cedula,
+      })
+      .then((response) => {
+        setUsuarios(response.data);
+        window.location.reload();
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   /* Si la seleccion es Activo, que almacene en la vatiable isActive un true, si no un false  */
 
+  const handleChangeRol = (event) => {
+    const selectedValue = event.target.value;
+    let rol = selectedValue;
+
+    if (rol == "Todos") {
+      fetchUsuarios(null);
+    }
+
+    console.log(selectedValue);
+    setSelectedRol(rol);
+    fetchUsuarios(
+      selectedOption === "Activo" ? true : null,
+      rol,
+      cedulaFiltro,
+      nombreFiltro,
+      apellidoFiltro
+    );
+    console.log(rol);
+  };
+
   const handleChange = (event) => {
     const selectedValue = event.target.value;
-    console.log(selectedValue)
+    console.log(selectedValue);
     let isActive = null;
 
     if (selectedValue === "Activo") {
@@ -25,14 +72,58 @@ export function Usuarios() {
     }
 
     setSelectedOption(selectedValue);
-    fetchUsuarios(isActive);
+    fetchUsuarios(
+      isActive,
+      selectedRol,
+      cedulaFiltro,
+      nombreFiltro,
+      apellidoFiltro
+    );
+  };
+  const handleCedulaFilter = (event) => {
+    const value = event.target.value;
+    setCedulaFiltro(value);
+    fetchUsuarios(
+      selectedOption === "Activo" ? true : null,
+      selectedRol,
+      value,
+      nombreFiltro,
+      apellidoFiltro
+    );
   };
 
-  const fetchUsuarios = (isActive) => {
+  const handleNombreFilter = (event) => {
+    const nombre = event.target.value;
+    setNombreFiltro(nombre);
+    fetchUsuarios(
+      selectedOption === "Activo" ? true : null,
+      selectedRol,
+      cedulaFiltro,
+      nombre,
+      apellidoFiltro
+    );
+  };
+
+  const handleApellidoFilter = (event) => {
+    const apellido = event.target.value;
+    setApellidoFiltro(apellido);
+    fetchUsuarios(
+      selectedOption === "Activo" ? true : null,
+      selectedRol,
+      cedulaFiltro,
+      nombreFiltro,
+      apellido
+    );
+  };
+
+  const fetchUsuarios = (isActive, rol, cedula, nombre, apellido) => {
     const requestData = {
       cedula_acceso: cedula_acceso,
       is_active: isActive,
-      // Agrega los otros parámetros según sea necesario (apellido, nombre, rol)
+      rol: rol,
+      cedula: cedula,
+      nombre: nombre,
+      apellido: apellido,
     };
 
     api
@@ -47,15 +138,34 @@ export function Usuarios() {
   };
 
   useEffect(() => {
-    fetchUsuarios(null); // Realizar la llamada inicial sin filtro de isActive
+    fetchUsuarios(null, null, "");
   }, []);
-
 
   return (
     <div>
       <select
         className={`selectTypeUser ${selectedOption ? "selectedOption" : ""}`}
-        style={{ marginLeft: "290px", marginTop: "10px" , width:'300px'}}
+        style={{
+          marginLeft: "290px",
+          marginTop: "10px",
+          width: "300px",
+          display: "block",
+        }}
+        value={selectedRol}
+        onChange={handleChangeRol}
+      >
+        <option disabled value="" className="disabledOption">
+          Rol:
+        </option>
+        <option>Administrador</option>
+        <option>Consejero</option>
+        <option>Monitor</option>
+        <option>Todos</option>
+      </select>
+
+      <select
+        className={`selectTypeUser ${selectedOption ? "selectedOption" : ""}`}
+        style={{ marginLeft: "290px", marginTop: "10px", width: "300px" }}
         value={selectedOption}
         onChange={handleChange}
       >
@@ -65,6 +175,45 @@ export function Usuarios() {
         <option>Activo</option>
         <option>Inactivo</option>
       </select>
+
+      <input
+        type="text"
+        placeholder="Filtrar por cédula"
+        value={cedulaFiltro}
+        onChange={handleCedulaFilter}
+        style={{
+          marginLeft: "290px",
+          marginTop: "10px",
+          width: "300px",
+          display: "block",
+        }}
+      />
+
+      <input
+        type="text"
+        placeholder="Filtrar por nombre"
+        value={nombreFiltro}
+        onChange={handleNombreFilter}
+        style={{
+          marginLeft: "290px",
+          marginTop: "10px",
+          width: "300px",
+          display: "block",
+        }}
+      />
+
+      <input
+        type="text"
+        placeholder="Filtrar por apellido"
+        value={apellidoFiltro}
+        onChange={handleApellidoFilter}
+        style={{
+          marginLeft: "290px",
+          marginTop: "10px",
+          width: "300px",
+          display: "block",
+        }}
+      />
 
       <section
         className="intro"
@@ -108,7 +257,18 @@ export function Usuarios() {
                                 <td>{usuario.cedula}</td>
                                 <td>{usuario.email}</td>
                                 <td>
-                                  {usuario.is_active ? "Activo" : "Inactivo"}
+                                  <button
+                                    className={`btn btn-sm ${
+                                      usuario.is_active
+                                        ? "btn-success"
+                                        : "btn-danger"
+                                    }`}
+                                    onClick={() =>
+                                      toggleEstadoUsuario(usuario.cedula)
+                                    }
+                                  >
+                                    {usuario.is_active ? "Activo" : "Inactivo"}
+                                  </button>
                                 </td>
                               </tr>
                             ))}
