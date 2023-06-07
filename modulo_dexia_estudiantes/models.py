@@ -16,6 +16,9 @@ class Estudiante(models.Model):
     celular = models.TextField(unique=False, max_length=11)
     codigo_estudiantil = models.TextField(unique=True, max_length=11, null=False, blank=False)
 
+    def __str__(self):
+        return self.correo_institucional
+
 
 class Programa_acompañamiento(models.Model):
     #Aquí irán los programas y servicios posibles para realizar remisión a un estudiante
@@ -30,3 +33,4 @@ class Programa_acompañamiento(models.Model):
 class Remision(models.Model):
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, null=False)
     pograma = models.ForeignKey(Programa_acompañamiento, on_delete=models.CASCADE, null=False)
+
