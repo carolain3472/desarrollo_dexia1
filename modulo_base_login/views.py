@@ -79,11 +79,6 @@ class UsuariosList(viewsets.ModelViewSet):
 
 
 
-class RoleList(generics.ListAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = UsuarioSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
-    filterset_class = CustomUserFilter
 
 
 class Login(FormView):

@@ -13,7 +13,7 @@ db.sqlite3-journal
 media
 
 modulo_base_login/migrations/
-modulo_base_estudiantes/migrations/
+modulo_dexia_estudiantes/migrations/
 
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
