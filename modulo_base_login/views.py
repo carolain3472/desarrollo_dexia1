@@ -26,33 +26,40 @@ from django.contrib.auth.hashers import make_password
 from .models import CustomUser
 from .filters import CustomUserFilter
 
-#JWT y  O2 de validacion de token 
 class UsuariosList(viewsets.ModelViewSet):
     def post(self, request):
         serializer = UsuarioSerializer(data=request.data)
         cedula_acceso = request.data.get("cedula_acceso")
-
         try:
             user = CustomUser.objects.get(cedula=cedula_acceso)
             token_exists = Token.objects.filter(user=user).exists()
-
             if token_exists:
                 queryset = CustomUser.objects.all()
-
                 is_active = request.data.get("is_active")
                 apellido = request.data.get("apellido")
                 nombre = request.data.get("nombre")
                 rol = request.data.get("rol")
+                cedula = request.data.get("cedula")
 
                 # Crear una lista de filtros a aplicar
                 filters = Q()
-
                 # Agregar los filtros según los parámetros proporcionados
                 if is_active is not None:
                     filters &= Q(is_active=is_active)
                 if apellido:
+                    filters &= Q(primer_apellido__icontains=apellido)
                     filters &= Q(apellido__icontains=apellido)
                 if nombre:
+                    filters &= Q(first_name__icontains=nombre)
+                    ##o filters &= Q(nombre__startswith=nombre)
+                if rol == "Consejero":
+                     filters &= Q(role="Consejero")
+                if rol == "Administrador":
+                     filters &= Q(role="Administrador")
+                if rol == "Monitor":
+                     filters &= Q(role="Monitor")
+                if cedula:
+                    filters &= Q(cedula__startswith=cedula)
                     filters &= Q(nombre__icontains=nombre)
                 if rol:
                     filters &= Q(rol=rol)
@@ -62,10 +69,8 @@ class UsuariosList(viewsets.ModelViewSet):
 
                 serializer = UsuarioSerializer(queryset, many=True)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-
         except CustomUser.DoesNotExist:
             pass
-
         return Response(status=status.HTTP_404_NOT_FOUND)
         
 
@@ -137,7 +142,6 @@ class LoginView(APIView):
 class RegisterUserView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
-
     def post(self, request):
         serializer = UsuarioSerializer(data=request.data)
         nombre= request.data.get('first_name')
@@ -146,20 +150,18 @@ class RegisterUserView(APIView):
         segundo_apellido= request.data.get('segundo_apellido')
         cedula= request.data.get("cedula")
         cedula_acceso= request.data.get("cedula_acceso")
+        rol= request.data.get("rol")
 
         try:
 
-
             user = CustomUser.objects.get(cedula=cedula_acceso)
-
             token_exists = Token.objects.filter(user=user).exists()
-
             if token_exists:
-
                 print(nombre)
                 print(email)
                 print(primer_apellido)
                 print(segundo_apellido)
+                print(rol)
                 print("Entró")
 
             # Crear el superusuario
@@ -169,6 +171,8 @@ class RegisterUserView(APIView):
                 first_name=nombre,
                 primer_apellido=primer_apellido,
                 segundo_apellido=segundo_apellido,
+                email=email,
+                role= rol,
                 email=email
     )
                 superuser.is_staff=True
