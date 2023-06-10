@@ -37,7 +37,7 @@ class UsuariosList(viewsets.ModelViewSet):
             user = CustomUser.objects.get(cedula=cedula_acceso)
             token_exists = Token.objects.filter(user=user).exists()
 
-            if token_exists:
+            if token_exists and user.role=="Administrador":
                 queryset = CustomUser.objects.all()
 
                 is_active = request.data.get("is_active")
@@ -77,7 +77,10 @@ class UsuariosList(viewsets.ModelViewSet):
         return Response(status=status.HTTP_404_NOT_FOUND)
         
 
-
+class Listar(viewsets.ModelViewSet):
+    serializer_class=UsuarioSerializer
+    queryset= CustomUser.objects
+    
 
 
 
@@ -99,6 +102,7 @@ class Login(FormView):
         token,_ = Token.objects.get_or_create(user = user)
         if token:
             login(self.request, form.get_user())
+            print(user.is_active)
             return super(Login,self).form_valid(form)
         
 class Logout(APIView):
@@ -134,7 +138,11 @@ class LoginView(APIView):
                 if user is not None:
                     login(request, user)
                     token, _ = Token.objects.get_or_create(user=user)
-                    return Response({'valid': True, 'token': token.key, 'nombre': usuario.first_name})
+                    print(user.is_superuser)
+                    return Response({'valid': True, 'token': token.key, 'nombre': usuario.first_name, 'correo': usuario.email, 'apellido': usuario.primer_apellido,
+                                     'apellido_dos': usuario.segundo_apellido, 'rol': usuario.role
+                                     
+                                     })
 
         except CustomUser.DoesNotExist:
             raise AuthenticationFailed('Las credenciales proporcionadas son inválidas.')
@@ -224,3 +232,32 @@ class cambiarEstado(APIView):
             return Response(status=status.HTTP_200_OK)
         except:
              return Response(status=status.HTTP_404_NOT_FOUND)
+        
+class UpdateContraseña(APIView):
+
+    def post(self, request):
+        cedula= request.data.get('cedula')
+        password= request.data.get('password')
+        
+        try:
+            # Buscar al usuario por nombre de usuario en la base de datos
+            user = CustomUser.objects.get(cedula=cedula)
+
+            token_exists = Token.objects.filter(user=user).exists()
+
+            if password=='' or password==' ':
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+            if token_exists:
+                user.set_password(password)
+                user.save()
+                print(password)
+                return Response(status=status.HTTP_200_OK)
+            else:
+                # El token no está asociado al usuario
+                return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+        except CustomUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)

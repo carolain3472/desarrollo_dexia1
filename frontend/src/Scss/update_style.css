@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap");
+
+.gradient-custom {
+  /* fallback for old browsers */
+  background:#9d261b;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right bottom, #9d261b, #961b10);
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right bottom, #a4453c, #9d261b);
+}
+
+.square-image {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .selected {
+    border: 2px solid rgb(0, 0, 0);
+  }
+
+  .botonCambio{
+    transition: 0.5s background-color;
+    background-color:#D03838;
+    border-radius: 10px;
+    color: white;
+  }
+
+  .botonCambio:hover{
+    background-color: #e15f5f;
+  }

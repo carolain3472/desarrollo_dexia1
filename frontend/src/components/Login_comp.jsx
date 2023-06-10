@@ -9,6 +9,7 @@ import dexiaLogo from "../images/dexia_logo.png"; // Ruta relativa de la imagen
 import consejeria_logo from "../images/consejeria_logo-noFondo.png";
 import { api } from "../api/register_api";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { Carousel } from "react-bootstrap";
 
 export const Formulario = () => {
@@ -37,15 +38,48 @@ export const Formulario = () => {
           // Redirigir a otra página
           sessionStorage.setItem("nombre", response.data.nombre);
           sessionStorage.setItem("cedula", cedula);
+          sessionStorage.setItem("correo", response.data.correo);
+          sessionStorage.setItem("apellido", response.data.apellido);
+          sessionStorage.setItem("apellido_dos", response.data.apellido_dos);
+          sessionStorage.setItem("rol", response.data.rol);
           navigate("/next");
+          Swal.fire({
+            icon: "success",
+            title: "Operación exitosa",
+            text: "Se ha iniciado sesión correctamente",
+            confirmButtonText: "Continuar",
+            allowOutsideClick: false,
+            showCancelButton: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Redirigir a la página actual
+              window.location.reload();
+            }
+          });
         } else {
           // Mostrar un mensaje de error o realizar alguna otra acción en caso de respuesta negativa
           console.log("No lo pudo validar");
+          Swal.fire({
+            icon: "error",
+            title: "Opps algo salió mal",
+            text: "Verifica tus credenciales",
+            confirmButtonText: "Continuar",
+            allowOutsideClick: false,
+            showCancelButton: false,
+          });
         }
       })
       .catch((error) => {
         // Manejar el error de la solicitud
         console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Opps algo salió mal",
+          text: "Verifica tus credenciales",
+          confirmButtonText: "Continuar",
+          allowOutsideClick: false,
+          showCancelButton: false,
+        });
       });
   };
 
