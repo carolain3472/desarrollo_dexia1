@@ -117,6 +117,11 @@ export function NavbarAdmin() {
   };
 
 
+  const  redireccionar_ajustes = () => {
+    navigate("/ajustes"); // Redireccionar a la página de registro
+  };
+
+
   return (
     <div className="dashboard-nav">
       <header>
@@ -220,6 +225,7 @@ export function NavbarAdmin() {
         </div>
         <a
           href="#!"
+          onClick={redireccionar_ajustes}
           className={`dashboard-nav-item ${
             location.pathname === "/perfil" ? "active" : ""
           }`}

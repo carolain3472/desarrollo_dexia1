@@ -6,6 +6,7 @@ import "./Scss/login.css";
 import "./Scss/tabla.css"
 import {Inicio_app} from './pages/inicio_app'
 import { UsuariosList_all } from './pages/usuariosList';
+import {Configuracion_user} from './pages/configuracion_user';
 
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
       <Route path='/registro' element ={<Registro/>} />
       <Route path='/inicio' element ={<Inicio_app/>} />
       <Route path='/usuarios_Lista' element ={<UsuariosList_all/>} />
-
+      <Route path='/ajustes' element ={<Configuracion_user/>} />
+     
       
     </Routes>
 

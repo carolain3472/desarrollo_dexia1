@@ -3,6 +3,7 @@ import { createuser } from "../api/register_api";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -34,32 +35,82 @@ export function Register_form() {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    const { email, cedula, first_name, primer_apellido, segundo_apellido, selectedRol } = data;
+    const {
+      email,
+      cedula,
+      first_name,
+      primer_apellido,
+      segundo_apellido,
+      selectedRol,
+    } = data;
     const cedula_acceso = sessionStorage.getItem("cedula");
+
+    const capitalizeFirstLetter = (str) => {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    };
+
+    // Convertir las variables a mayúscula
+    const capitalizedFirstName = capitalizeFirstLetter(first_name);
+    const capitalizedPrimerApellido = capitalizeFirstLetter(primer_apellido);
+    const capitalizedSegundoApellido = capitalizeFirstLetter(segundo_apellido);
 
     // Enviar la solicitud POST al backend
     api
       .post("/login/registro", {
         email,
         cedula,
-        first_name,
+        first_name: capitalizedFirstName,
         rol: selectedRol,
-        primer_apellido,
-        segundo_apellido,
+        primer_apellido: capitalizedPrimerApellido,
+        segundo_apellido: capitalizedSegundoApellido,
         cedula_acceso,
       })
       .then((response) => {
         // Manejar la respuesta del backend
+        // Manejar la respuesta del backend
         if (response.data.valid) {
-          console.log("Lo envió");
+          Swal.fire({
+            icon: "success",
+            title: "Operación exitosa",
+            text: "Te has registrado correctamente",
+            confirmButtonText: "Continuar",
+            allowOutsideClick: false,
+            showCancelButton: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Redirigir a la página actual
+              window.location.reload();
+            }
+          });
         } else {
           // Mostrar un mensaje de error o realizar alguna otra acción en caso de respuesta negativa
           console.log("No lo pudo enviar");
+          Swal.fire({
+            icon: "success",
+            title: "Operación exitosa",
+            text: "Registro realizado con éxito",
+            confirmButtonText: "Continuar",
+            allowOutsideClick: false,
+            showCancelButton: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Redirigir a la página actual
+              window.location.reload();
+            }
+          });
         }
       })
       .catch((error) => {
         // Manejar el error de la solicitud
         console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Opps algo salió mal",
+          text: "Verifica los campos ingresados",
+          confirmButtonText: "Continuar",
+          allowOutsideClick: false,
+          showCancelButton: false,
+        });
       });
   };
 
@@ -121,7 +172,6 @@ export function Register_form() {
                       placeholder="Segundo Apelido *"
                       type="text"
                       {...register("segundo_apellido")}
-                      
                     />
                   </div>
 
@@ -151,10 +201,3 @@ export function Register_form() {
     </div>
   );
 }
-
-
-
-
-
-
-
