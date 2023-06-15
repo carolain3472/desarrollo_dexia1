@@ -50,7 +50,7 @@ class RemisionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Remision
-        fields = ['id_estudiante', 'id_programa']
+        fields = ['estudiante', 'pograma']
 
     def create(self, validated_data):
         remision = Remision.objects.create(**validated_data)
