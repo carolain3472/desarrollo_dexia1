@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.css";
-import "../Scss/navbar.css";
+import "../../Scss/navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -17,12 +17,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import React, { useEffect, useState } from "react";
-import { mobileScreen } from "../api/navbar"; // Importa mobileScreen desde el archivo navbar.js
+import { mobileScreen } from "../../api/navbar"; // Importa mobileScreen desde el archivo navbar.js
 import axios, { all } from "axios";
-import dexiaLogo from "../images/logo_dexia_blanco.png";
+import dexiaLogo from "../../images/logo_dexia_blanco.png";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
-import { api } from "../api/register_api";
+import { api } from "../../api/register_api";
 
 export function NavbarAdmin() {
   const storedCel = sessionStorage.getItem("nombre");

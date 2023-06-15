@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
-import { api } from "../api/register_api";
-import "../scss/update_style.css";
+import { api } from "../../api/register_api";
+import "../../Scss/update_style.css";
 
 export function Configuracion() {
 

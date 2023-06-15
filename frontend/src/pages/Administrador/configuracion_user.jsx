@@ -1,6 +1,6 @@
 import React from 'react'
-import { Configuracion } from '../components/configuracion'
-import { NavbarAdmin } from '../components/Nav_bar'
+import { Configuracion } from '../../components/Administrador/configuracion'
+import { NavbarAdmin } from '../../components/Administrador/Nav_bar'
 
 export function Configuracion_user() {
   return (

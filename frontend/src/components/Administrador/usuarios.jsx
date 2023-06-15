@@ -1,10 +1,10 @@
 import React from "react";
-import { api } from "../api/register_api";
+import { api } from "../../api/register_api";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 
-export function Estudiantes() {
+export function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const cedula_acceso = sessionStorage.getItem("cedula");
   const [selectedOption, setSelectedOption] = useState("");
