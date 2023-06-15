@@ -1,8 +1,8 @@
-import django_filters
+import django_filters as filters
 from .models import Estudiante, Programa_acompañamiento, Remision
 
 
-class EstudianteFilter(django_filters.FilterSet):
+class EstudianteFilter(filters.FilterSet):
 
     profesional = filters.CharFilter(field_name = "profesional", lookup_expr = "exact")
     nombre = filters.CharFilter(field_name = "nombre", lookup_expr = "contains")
@@ -19,10 +19,18 @@ class EstudianteFilter(django_filters.FilterSet):
 
 
 
-class RemisionFilter(django_filters.FilterSet):
+class RemisionFilter(filters.FilterSet):
     programa = filters.CharFilter(field_name = "programa", lookup_expr = "exact")
     estudiante = filters.CharFilter(field_name = "estudiante", lookup_expr = "exact")
 
     class Meta:
         model = Remision
         fields = ["programa", "estudiante"]
+
+
+class Programa_acompañamientoFilter(filters.FilterSet):
+    nombre_programa = filters.CharFilter(field_name = "nombre_programa", lookup_expr = "exact")
+    
+    class Meta:
+        model = Programa_acompañamiento
+        fields = ["nombre_programa"]
