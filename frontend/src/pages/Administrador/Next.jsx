@@ -1,4 +1,4 @@
-import { NavbarAdmin } from "../components/Nav_bar"
+import { NavbarAdmin } from "../../components/Administrador/Nav_bar"
 
 export function Next() {
   return (

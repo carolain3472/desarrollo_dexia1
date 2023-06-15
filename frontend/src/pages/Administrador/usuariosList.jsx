@@ -1,6 +1,6 @@
 import React from 'react'
-import { Usuarios } from '../components/usuarios'
-import { NavbarAdmin } from '../components/Nav_bar'
+import { Usuarios } from '../../components/Administrador/usuarios'
+import { NavbarAdmin } from '../../components/Administrador/Nav_bar'
 
 export function UsuariosList_all() {
   return (

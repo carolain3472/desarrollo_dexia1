@@ -42,7 +42,16 @@ export const Formulario = () => {
           sessionStorage.setItem("apellido", response.data.apellido);
           sessionStorage.setItem("apellido_dos", response.data.apellido_dos);
           sessionStorage.setItem("rol", response.data.rol);
-          navigate("/next");
+
+          if (response.data.rol== "Administrador"){
+            navigate("/next");
+          }
+
+          if (response.data.rol== "Consejero"){
+            navigate("/inicioConsejero");
+            
+          }
+
           Swal.fire({
             icon: "success",
             title: "Operación exitosa",

@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { createuser } from "../api/register_api";
+import { createuser } from "../../api/register_api";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState } from "react";
@@ -22,8 +22,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import axios from "axios";
-import { api } from "../api/register_api";
-import "../scss/register.css";
+import { api } from "../../api/register_api";
+import "../../scss/register.css";
 
 export function Register_form() {
   const [email, setEmail] = useState("");
