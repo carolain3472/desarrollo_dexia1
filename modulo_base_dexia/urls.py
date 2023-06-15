@@ -18,13 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken import views
 from modulo_base_login.views import Login,Logout
+from modulo_dexia_estudiantes import views
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', include(('modulo_base_login.urls', 'default'))),
-    path('api_generate_token/', views.obtain_auth_token), #SOlo es aceptado por el método post
+    #path('api_generate_token/', views.obtain_auth_token), #SOlo es aceptado por el método post
     path('login_user/',Login.as_view(), name = 'login'),
     path('logout/', Logout.as_view()),
+    path('estudiantes/', include('modulo_dexia_estudiantes.urls')), 
+
 ]
