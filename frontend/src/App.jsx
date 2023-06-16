@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login_template } from './pages/Administrador/Login_template';
 import { Next } from './pages/Administrador/Next';
 import { Registro } from './pages/Administrador/registro';
@@ -16,39 +16,36 @@ import { Acceso_denegado } from './pages/denegado';
 function App() {
   const rol = sessionStorage.getItem("rol");
 
+  const validarAcceso = (rolPermitido, elemento) => {
+    if (rol !== rolPermitido) {
+      return <Navigate to="/acceso_denegado" />;
+    }
+    return elemento;
+  };
+
   return (
     <BrowserRouter>
       <Routes>
         {/* ADMINISTRADOR */}
-        {rol === "Administrador" && (
-          <>
-            <Route path='/next' element={<Next />} />
-            <Route path='/registro' element={<Registro />} />
-            <Route path='/inicio' element={<Inicio_app />} />
-            <Route path='/usuarios_Lista' element={<UsuariosList_all />} />
-            <Route path='/ajustes' element={<Configuracion_user />} />
-            <Route element={<Acceso_denegado />} />
-          </>
-        )}
+        <Route path='/next' element={validarAcceso("Administrador", <Next />)} />
+        <Route path='/registro' element={validarAcceso("Administrador", <Registro />)} />
+        <Route path='/inicio' element={validarAcceso("Administrador", <Inicio_app />)} />
+        <Route path='/usuarios_Lista' element={validarAcceso("Administrador", <UsuariosList_all />)} />
+        <Route path='/ajustes' element={validarAcceso("Administrador", <Configuracion_user />)} />
 
         {/* CONSEJERO */}
-        {rol === "Consejero" && (
-          <>
-            <Route path='/consejero_init' element={<Consejero_next />} />
-            <Route path='/ajustes_consejeros' element={<Configuracion_consejero_page />} />
-            <Route path='/estudiantes_consejeria' element={<EstudiantesList_consejeros />} />
-            <Route path='/inicioConsejero' element={<Inicio_consejero />} />
-            <Route  element={<Acceso_denegado />} />
-          </>
-        )}
+        <Route path='/consejero_init' element={validarAcceso("Consejero", <Consejero_next />)} />
+        <Route path='/ajustes_consejeros' element={validarAcceso("Consejero", <Configuracion_consejero_page />)} />
+        <Route path='/estudiantes_consejeria' element={validarAcceso("Consejero", <EstudiantesList_consejeros />)} />
+        <Route path='/inicioConsejero' element={validarAcceso("Consejero", <Inicio_consejero />)} />
 
-  
-        
         {/* Ruta predeterminada */}
         <Route path='/login' element={<Login_template />} />
+        <Route path='/acceso_denegado' element={<Acceso_denegado />} />
       </Routes>
     </BrowserRouter>
   );
 }
+
 
 export default App;
