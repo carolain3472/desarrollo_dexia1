@@ -32,4 +32,4 @@ class Programa_acompañamiento(models.Model):
 
 class Remision(models.Model):
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, null=False)
-    pograma = models.ForeignKey(Programa_acompañamiento, on_delete=models.CASCADE, null=False)
+    programa = models.ForeignKey(Programa_acompañamiento, on_delete=models.CASCADE, null=False)

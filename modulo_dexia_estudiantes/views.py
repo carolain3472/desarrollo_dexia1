@@ -27,7 +27,7 @@ class ListarEstudiantes(generics.ListAPIView):
     serializer_class = EstudianteSerializer
     queryset = Estudiante.objects.all()
     filterset_class = EstudianteFilter
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
 class ListarRemision(generics.ListAPIView):
     serializer_class = RemisionSerializer
