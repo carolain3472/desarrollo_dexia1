@@ -45,7 +45,7 @@ function App() {
      <Route path='/inicioConsejero' element={<Inicio_consejero />} index />
 
       {/* Ruta predeterminada para ADMINISTRADOR */}
-           <Route path='/next' element={<Inicio_consejero />} index />
+           <Route path='/next' element={<Next />} index />
 
 
 
