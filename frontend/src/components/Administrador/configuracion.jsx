@@ -1,10 +1,11 @@
 import React from 'react'
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
 import { api } from "../../api/register_api";
 import "../../Scss/update_style.css";
+import { useEffect } from "react";
 
 export function Configuracion() {
 
@@ -12,6 +13,18 @@ export function Configuracion() {
   * Obtiene el nombre de usuario almacenado en la sesión.
   * @returns {string|null} El nombre de usuario almacenado, o null si no existe.
   */
+
+
+ useEffect(() => {
+    const validarAcceso = () => {
+      if (sessionStorage.getItem("rol") != "Administrador") {
+        Navigate("/acceso_denegado");
+      } 
+    };
+  
+    validarAcceso();
+  }, []);
+
   const getStoredNombre = () => {
     return sessionStorage.getItem("nombre");
   };

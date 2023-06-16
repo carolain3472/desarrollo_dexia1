@@ -138,9 +138,17 @@ export function Estudiantes() {
   };
 
   useEffect(() => {
-    fetchUsuarios(null, null, "");
+    const validarAcceso = () => {
+      if (sessionStorage.getItem("rol") !== "Administrador") {
+        Navigate("/acceso_denegado");
+      } else {
+        fetchUsuarios(null, null, "");
+      }
+    };
+  
+    validarAcceso();
   }, []);
-
+  
   return (
     <div>
       <select
