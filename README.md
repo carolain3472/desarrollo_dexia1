@@ -11,3 +11,12 @@ python manage.py migrate
 
 python manage.py runserver
 
+
+Para ejecutar el front (con gitbash):
+
+cd frontend
+
+npm install
+
+npm run dev
+
