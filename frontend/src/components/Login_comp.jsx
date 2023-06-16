@@ -49,8 +49,12 @@ export const Formulario = () => {
 
           if (response.data.rol== "Consejero"){
             navigate("/inicioConsejero");
+      
             
           }
+
+
+          console.log(sessionStorage.getItem("rol"))
 
           Swal.fire({
             icon: "success",
