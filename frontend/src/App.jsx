@@ -32,16 +32,27 @@ function App() {
         <Route path='/inicio' element={validarAcceso("Administrador", <Inicio_app />)} />
         <Route path='/usuarios_Lista' element={validarAcceso("Administrador", <UsuariosList_all />)} />
         <Route path='/ajustes' element={validarAcceso("Administrador", <Configuracion_user />)} />
+     
 
         {/* CONSEJERO */}
         <Route path='/consejero_init' element={validarAcceso("Consejero", <Consejero_next />)} />
         <Route path='/ajustes_consejeros' element={validarAcceso("Consejero", <Configuracion_consejero_page />)} />
         <Route path='/estudiantes_consejeria' element={validarAcceso("Consejero", <EstudiantesList_consejeros />)} />
         <Route path='/inicioConsejero' element={validarAcceso("Consejero", <Inicio_consejero />)} />
+        
+
+      {/* Ruta predeterminada para CONSEJERO */}
+     <Route path='/inicioConsejero' element={<Inicio_consejero />} index />
+
+      {/* Ruta predeterminada para ADMINISTRADOR */}
+           <Route path='/next' element={<Inicio_consejero />} index />
+
+
 
         {/* Ruta predeterminada */}
         <Route path='/login' element={<Login_template />} />
         <Route path='/acceso_denegado' element={<Acceso_denegado />} />
+      
       </Routes>
     </BrowserRouter>
   );
