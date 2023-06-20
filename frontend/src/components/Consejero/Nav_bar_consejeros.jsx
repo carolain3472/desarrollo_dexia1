@@ -78,7 +78,7 @@ export function NavbarConsejeros() {
         console.log("Logout exitoso");
         sessionStorage.removeItem("cedula");
         sessionStorage.removeItem("rol")
-        sessionStorage.removeItem(all);
+        sessionStorage.clear();
         navigate("/login");
       })
       .catch((error) => {

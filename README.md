@@ -5,7 +5,9 @@ source venv/Scripts/activate
 
 pip install -r requirements.txt
 
-python manage.py makemigrations
+python manage.py makemigrations modulo_base_login
+
+python manage.py makemigrations modulo_dexia_estudiantes 
 
 python manage.py migrate
 
