@@ -5,8 +5,6 @@ export function Estudiantes_consejeros() {
   const [estudiantes, setEstudiantes] = useState([]);
   const [identificacionFiltro, setIdentificacionFiltro] = useState("");
   const [nombreFiltro, setNombreFiltro] = useState("");
-  const [primerApellidoFiltro, setPrimerApellidoFiltro] = useState("");
-  const [correoFiltro, setCorreoFiltro] = useState("");
   const [codigoFiltro, setCodigoFiltro] = useState("");
 
 
@@ -17,8 +15,6 @@ export function Estudiantes_consejeros() {
     fetchEstudiantes(
       identificacion,
       nombreFiltro,
-      primerApellidoFiltro,
-      correoFiltro,
       codigoFiltro
     );
   };
@@ -29,35 +25,11 @@ export function Estudiantes_consejeros() {
     fetchEstudiantes(
       identificacionFiltro,
       nombre,
-      primerApellidoFiltro,
-      correoFiltro,
       codigoFiltro
     );
   };
 
-  const handlePrimerApellidoFilter = (event) => {
-    const primerApellido = event.target.value;
-    setPrimerApellidoFiltro(primerApellido);
-    fetchEstudiantes(
-      identificacionFiltro,
-      nombreFiltro,
-      primerApellido,
-      correoFiltro,
-      codigoFiltro
-    );
-  };
 
-  const handCorreoFilter = (event) => {
-    const correo = event.target.value;
-    setCorreoFiltro(correo);
-    fetchEstudiantes(
-      identificacionFiltro,
-      nombreFiltro,
-      primerApellidoFiltro,
-      correo,
-      codigoFiltro
-    );
-  };
 
 const handCodigoFilter = (event) => {
     const codigo = event.target.value;
@@ -65,24 +37,20 @@ const handCodigoFilter = (event) => {
     fetchEstudiantes(
       identificacionFiltro,
       nombreFiltro,
-      primerApellidoFiltro,
-      correoFiltro,
       codigo
     );
   };
 
 
   useEffect(() => {
-    fetchEstudiantes();
+    fetchEstudiantes("", "", "");
   }, []);
 
 
-  const fetchEstudiantes = (doc_identidad, nombre, primer_apellido, correo_institucional, codigo_estudiantil) => {
+  const fetchEstudiantes = (doc_identidad, nombre, codigo_estudiantil) => {
     const params = new URLSearchParams({
       doc_identidad,
       nombre,
-      primer_apellido,
-      correo_institucional,
       codigo_estudiantil,
     });
   
@@ -103,7 +71,7 @@ const handCodigoFilter = (event) => {
 
    return (
     <div>
-          <div style={{ display: "flex", justifyContent: "space-between", marginLeft: "-300px", marginRight: "50px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginLeft: "-150px", marginRight: "350px", marginTop:"-50px" }}>
             <input
               type="text"
               placeholder="Filtrar por cédula"
@@ -121,26 +89,6 @@ const handCodigoFilter = (event) => {
               onChange={handleNombreFilter}
               style={{ 
                 width: "200px",
-                marginBottom:"15px" }}
-            />
-
-            <input
-              type="text"
-              placeholder="Filtrar por apellido"
-              value={primerApellidoFiltro}
-              onChange={handlePrimerApellidoFilter}
-              style={{ 
-                width: "200px",
-                marginBottom:"15px" }}
-            />
-
-            <input
-              type="text"
-              placeholder="Filtrar por correo"
-              value={correoFiltro}
-              onChange={handCorreoFilter}
-              style={{ 
-                width: "250px",
                 marginBottom:"15px" }}
             />
 
@@ -175,8 +123,7 @@ const handCodigoFilter = (event) => {
                           <thead style={{ backgroundColor: "#D02424" }}>
                             <tr>
                               <th scope="col">Nombre</th>
-                              <th scope="col">Primer apellido</th>
-                              <th scope="col">Segundo apellido</th>
+                              <th scope="col">Apellidos</th>
                               <th scope="col">Correo</th>
                               <th scope="col">Fecha de nacimiento</th>
                               <th scope="col">Identificación</th>
@@ -188,12 +135,7 @@ const handCodigoFilter = (event) => {
                             {estudiantes.map((estudiante) => (
                               <tr key={estudiante.id}>
                                 <td>{estudiante.nombre}</td>
-                                <td>{estudiante.primer_apellido}</td>
-                                <td>
-                                  {estudiante.segundo_apellido !== ""
-                                    ? estudiante.segundo_apellido
-                                    : "-"}
-                                </td>
+                                <td>{estudiante.primer_apellido+" "+estudiante.segundo_apellido}</td>
                                 <td>{estudiante.correo_institucional}</td>
                                 <td>{estudiante.fecha_nacimiento}</td>
                                 <td>{estudiante.doc_identidad}</td>

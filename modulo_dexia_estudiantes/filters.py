@@ -16,6 +16,7 @@ class EstudianteFilter(filters.FilterSet):
     class Meta:
         model = Estudiante
         fields = ["profesional", "nombre", "primer_apellido", "segundo_apellido", "correo_institucional", "doc_identidad", "codigo_estudiantil"]
+        
 
 
 
