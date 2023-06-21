@@ -33,6 +33,8 @@ python manage.py runserver
 
 --------------------------------------------------------------
 
+# Frontend
+
 Para ejecutar el front (con gitbash):
 
 cd frontend
