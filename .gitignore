@@ -12,6 +12,8 @@ db.sqlite3-journal
 
 media
 
+.env
+
 modulo_base_login/migrations/
 modulo_dexia_estudiantes/migrations/
 
