@@ -12,9 +12,9 @@ pip install -r requirements.txt
 Crear un archivo con el nombre .env en la raiz del proyectoy y poner en él la siguiente configuración
 
 ```
-DB_NAME=db_name
-DB_USER=db_username
-DB_PASSWORD=db_password
+DB_NAME=dexia
+DB_USER=postgres
+DB_PASSWORD=<tu contraseña en postgres>
 DB_HOST=127.0.0.1
 DB_PORT=5432
 ```
