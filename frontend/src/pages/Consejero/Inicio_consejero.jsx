@@ -14,7 +14,7 @@ export function Inicio_consejero() {
           <div className="container">
             <div className="card">
               <div className="card-header">
-                <h1>Bienvenid@, consejero {storedNombre}</h1>
+                <h1>Bienvenid@, {storedNombre}</h1>
               </div>
               <div className="card-body">
                 <Inicio_app_consejeria/>

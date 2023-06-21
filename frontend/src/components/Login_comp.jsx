@@ -40,6 +40,9 @@ export const Formulario = () => {
           sessionStorage.setItem("cedula", cedula);
           sessionStorage.setItem("correo", response.data.correo);
           sessionStorage.setItem("apellido", response.data.apellido);
+
+          sessionStorage.setItem("token", response.data.token);
+
           sessionStorage.setItem("apellido_dos", response.data.apellido_dos);
           sessionStorage.setItem("rol", response.data.rol);
 
