@@ -77,10 +77,54 @@ class UsuariosList(viewsets.ModelViewSet):
         return Response(status=status.HTTP_404_NOT_FOUND)
         
 
-class Listar(viewsets.ModelViewSet):
-    serializer_class=UsuarioSerializer
-    queryset= CustomUser.objects
+
     
+
+#class uploadFile(APIView):
+class Validador_carga(APIView):
+    def post(self, request):
+        tipo = request.POST.get('tipo_de_carga')
+        file = request.FILES.get('file')
+
+        if tipo == 'Estudiantes':
+            return carga_estudiantes(file)
+        elif tipo == 'Programa':
+            return carga_programas(file)
+        else:
+            return Response({'ERROR': 'No se seleccionó un tipo de carga válido.'})
+
+def carga_estudiantes(file):
+    print("entro al carga_estudiantes")
+    list_dict_result = []
+    lista_estudiantes =[]
+    print(file)
+    """  datos = pd.read_csv(file,header=0)
+    print(datos) """
+    """print("estos son los datos: "+str(datos)) """
+    return Response(status= status.HTTP_200_OK)
+
+
+def carga_programas(file):
+    print("entro al cargar programas")
+    list_dict_result = []
+    lista_estudiantes =[]
+    print(file)
+
+
+    datos = pd.read_csv(file,header=0)
+    print("estos son los datos: "+str(datos))
+
+    for i in range(datos.shape[0]):
+        
+        if (Estudiante.objects.filter(doc_identidad = datos.iat[i,0]).values()):
+            dict_result = {
+                'dato' : datos.iat[i,0],
+                'mensaje' : 'Ya existe en la BD este estudiante.'
+            }
+            list_dict_result.append(dict_result)
+     
+    response = HttpResponse("Carga masiva completed successfully!")
+    return response
 
 
 

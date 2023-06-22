@@ -11,6 +11,7 @@ import { Consejero_next } from './pages/Consejero/consejeros_paginaInit';
 import { Configuracion_consejero_page } from './pages/Consejero/configuracion_consejero';
 import { EstudiantesList_consejeros } from './pages/Consejero/estudiantesList_consejeros';
 import { Inicio_consejero } from './pages/Consejero/Inicio_consejero';
+import { Carga } from './pages/Administrador/Carga';
 import { Acceso_denegado } from './pages/denegado';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path='/inicio' element={validarAcceso("Administrador", <Inicio_app />)} />
         <Route path='/usuarios_Lista' element={validarAcceso("Administrador", <UsuariosList_all />)} />
         <Route path='/ajustes' element={validarAcceso("Administrador", <Configuracion_user />)} />
+        <Route path='/carga_masiva' element={validarAcceso("Administrador", <Carga />)} />
      
 
         {/* CONSEJERO */}
