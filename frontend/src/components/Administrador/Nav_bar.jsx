@@ -121,6 +121,10 @@ export function NavbarAdmin() {
     navigate("/ajustes"); // Redireccionar a la página de registro
   };
 
+  const  redireccionar_carga = () => {
+    navigate("/carga_masiva"); // Redireccionar a la página de registro
+  };
+ 
 
   return (
     <div className="dashboard-nav">
@@ -156,6 +160,7 @@ export function NavbarAdmin() {
         </a>
         <a
           href="#!"
+          onClick={redireccionar_carga}
           className={`dashboard-nav-item ${
             location.pathname === "/carga-masiva" ? "active" : ""
           }`}
