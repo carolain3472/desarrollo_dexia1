@@ -7,6 +7,7 @@ from .serializers import EstudianteSerializer, ProgramaAcompanamientoSerializer,
 from .models import Estudiante, Programa_acompañamiento, Remision
 
 
+
 # Create your views here.
 class CrearEstudiantesView(generics.CreateAPIView):
     serializer_class = EstudianteSerializer

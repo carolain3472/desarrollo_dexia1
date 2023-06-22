@@ -4,6 +4,8 @@ Para ejecutar el back (con gitbash):
 
 source venv/Scripts/activate
 
+source venv/Scripts/activate
+
 pip install -r requirements.txt
 
 

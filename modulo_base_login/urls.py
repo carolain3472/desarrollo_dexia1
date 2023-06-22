@@ -8,7 +8,7 @@ from .views import UsuariosList
 from .views import cambiarEstado
 from .views import Listar
 from .views import UpdateContraseña
-
+from .views import Validador_carga
 from rest_framework.documentation import include_docs_urls
 
 router= routers.DefaultRouter()
@@ -26,6 +26,6 @@ urlpatterns = [
     path('usuarioCambio/', cambiarEstado.as_view(), name='usuarioCambio'),
     path('listar/', Listar.as_view({'get': 'list'}), name='listar'),
     path('update_contra/', UpdateContraseña.as_view(), name='update_contra'),
-
+    path('carga_masiva/', Validador_carga.as_view(), name='validar-carga'),
 ]
 
