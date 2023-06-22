@@ -23,9 +23,11 @@ from django.db.models import Q
 from .serializer import UsuarioSerializer
 from rest_framework import viewsets
 from django.contrib.auth.hashers import make_password
-
+import pandas as pd
 from .models import CustomUser
+from modulo_dexia_estudiantes.models import Estudiante
 from .filters import CustomUserFilter
+from django.http import HttpResponse
 
 #JWT y  O2 de validacion de token 
 class UsuariosList(viewsets.ModelViewSet):
