@@ -73,7 +73,7 @@ export function NavbarAdmin() {
       .then((response) => {
         console.log("Logout exitoso");
         sessionStorage.removeItem("cedula");
-        sessionStorage.removeItem(all);
+        sessionStorage.clear();
         navigate("/login");
       })
       .catch((error) => {

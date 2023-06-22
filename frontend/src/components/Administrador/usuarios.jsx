@@ -2,7 +2,7 @@ import React from "react";
 import { api } from "../../api/register_api";
 import { useState } from "react";
 import { useEffect } from "react";
-import axios from "axios";
+
 
 export function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
@@ -131,6 +131,7 @@ export function Usuarios() {
       .then((response) => {
         setUsuarios(response.data);
         console.log(response.data);
+        console.log(response.config.url)
       })
       .catch((error) => {
         console.error(error);
