@@ -16,6 +16,7 @@ media
 
 modulo_base_login/migrations/
 modulo_dexia_estudiantes/migrations/
+modulo_dexia_sesiones/migrations/
 
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/

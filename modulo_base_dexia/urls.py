@@ -19,6 +19,7 @@ from django.urls import path, include
 from rest_framework.authtoken import views
 from modulo_base_login.views import Login,Logout
 from modulo_dexia_estudiantes import views
+from modulo_dexia_sesiones import views
 
 
 
@@ -29,5 +30,6 @@ urlpatterns = [
     path('login_user/',Login.as_view(), name = 'login'),
     path('logout/', Logout.as_view()),
     path('estudiantes/', include('modulo_dexia_estudiantes.urls')), 
+    path('sesiones/', include('modulo_dexia_sesiones.urls')),
 
 ]
