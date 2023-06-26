@@ -33,3 +33,26 @@ class Programa_acompañamiento(models.Model):
 class Remision(models.Model):
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, null=False)
     programa = models.ForeignKey(Programa_acompañamiento, on_delete=models.CASCADE, null=False)
+
+class Sede(models.Model):
+    identificador_univalle = models.IntegerField(primary_key=True)
+    nombre = models.CharField(max_length=100)
+
+    def _str_(self):
+        return self.nombre
+
+class Facultad(models.Model):
+    id = models.IntegerField(primary_key=True)
+    nombre = models.CharField(max_length=100)
+    sede = models.ForeignKey(Sede, on_delete=models.CASCADE)
+
+    def _str_(self):
+        return self.nombre
+
+class ProgramaAcademico(models.Model):
+    identificador_univalle = models.IntegerField()
+    facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=100)
+
+    def _str_(self):
+        return self.nombre

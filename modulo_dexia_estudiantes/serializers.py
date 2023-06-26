@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Estudiante, Programa_acompañamiento, Remision
+from .models import Estudiante, Programa_acompañamiento, Remision, Sede, Facultad
 
 
 class EstudianteSerializer(serializers.ModelSerializer):
@@ -62,3 +62,25 @@ class RemisionSerializer(serializers.ModelSerializer):
         instance.programa = validated_data.get('programa', instance.programa)
         instance.save()
         return instance
+    
+class SedeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Sede
+        fields = '__all__'
+
+    def create(self, validated_data):
+        sede = Sede.objects.create(**validated_data)
+        sede.save()
+        return sede
+    
+class FacultadSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Facultad
+        fields = '__all__'
+
+    def create(self, validated_data):
+        facultad = Facultad.objects.create(**validated_data)
+        facultad.save()
+        return facultad
