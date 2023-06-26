@@ -42,6 +42,7 @@ export const Formulario = () => {
           sessionStorage.setItem("apellido", response.data.apellido);
 
           sessionStorage.setItem("token", response.data.token);
+          sessionStorage.setItem("id", response.data.id);
 
           sessionStorage.setItem("apellido_dos", response.data.apellido_dos);
           sessionStorage.setItem("rol", response.data.rol);
