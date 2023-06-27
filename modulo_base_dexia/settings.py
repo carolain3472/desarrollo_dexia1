@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'django_filters',
 
     'modulo_base_login',
-    'modulo_dexia_estudiantes'
+    'modulo_dexia_estudiantes',
+    'modulo_dexia_sesiones'
 ]
 
 
