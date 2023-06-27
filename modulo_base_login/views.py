@@ -25,7 +25,8 @@ from rest_framework import viewsets
 from django.contrib.auth.hashers import make_password
 import pandas as pd
 from .models import CustomUser
-from modulo_dexia_estudiantes.models import Estudiante
+from modulo_dexia_estudiantes.models import Facultad
+from modulo_dexia_estudiantes.models import Sede
 from .filters import CustomUserFilter
 from django.http import HttpResponse
 
@@ -87,11 +88,14 @@ class Validador_carga(APIView):
     def post(self, request):
         tipo = request.POST.get('tipo_de_carga')
         file = request.FILES.get('file')
+        print(tipo)
 
         if tipo == 'Estudiantes':
             return carga_estudiantes(file)
-        elif tipo == 'Programa':
-            return carga_programas(file)
+        if tipo == 'Sede':
+            return carga_sedes(file)
+        elif tipo == 'Facultades':
+            return carga_facultades(file)
         else:
             return Response({'ERROR': 'No se seleccionó un tipo de carga válido.'})
 
@@ -106,25 +110,49 @@ def carga_estudiantes(file):
     return Response(status= status.HTTP_200_OK)
 
 
-def carga_programas(file):
-    print("entro al cargar programas")
-    list_dict_result = []
-    lista_estudiantes =[]
+def carga_facultades(file):
+    print("entro al cargar facultades")
     print(file)
 
-
-    datos = pd.read_csv(file,header=0)
-    print("estos son los datos: "+str(datos))
+    datos = pd.read_csv(file, header=0)
+    print("estos son los datos: " + str(datos))
 
     for i in range(datos.shape[0]):
-        
-        if (Estudiante.objects.filter(doc_identidad = datos.iat[i,0]).values()):
-            dict_result = {
-                'dato' : datos.iat[i,0],
-                'mensaje' : 'Ya existe en la BD este estudiante.'
-            }
-            list_dict_result.append(dict_result)
-     
+        id_facultad = int(datos.iat[i, 0])
+        nombre_facultad = str(datos.iat[i, 1])
+
+        # Verificar si la Facultad ya existe en la base de datos
+        if Facultad.objects.filter(id=id_facultad).exists():
+            print(f'La Facultad con ID {id_facultad} ya existe, no se puede cargar nuevamente.')
+        else:
+            # Crear una nueva instancia de Facultad y guardarla en la base de datos
+            facultad = Facultad(id=id_facultad, nombre=nombre_facultad)
+            facultad.save()
+            print(f'Facultad con ID {id_facultad} y nombre {nombre_facultad} guardada exitosamente.')
+
+    response = HttpResponse("Carga masiva completed successfully!")
+    return response
+
+def carga_sedes(file):
+    print("entro al cargar sedes")
+    print(file)
+
+    datos = pd.read_csv(file, header=0)
+    print("estos son los datos: " + str(datos))
+
+    for i in range(datos.shape[0]):
+        identificador_univalle = int(datos.iat[i, 0])
+        nombre_sede = str(datos.iat[i, 1])
+
+        # Verificar si la Facultad ya existe en la base de datos
+        if Sede.objects.filter(identificador_univalle=identificador_univalle).exists():
+            print(f'La sede con ID {identificador_univalle} ya existe, no se puede cargar nuevamente.')
+        else:
+            # Crear una nueva instancia de Facultad y guardarla en la base de datos
+            sede = Sede(identificador_univalle=identificador_univalle, nombre=nombre_sede)
+            sede.save()
+            print(f'Sede con ID {identificador_univalle} y nombre {nombre_sede} guardada exitosamente.')
+
     response = HttpResponse("Carga masiva completed successfully!")
     return response
 
@@ -176,6 +204,8 @@ class LoginView(APIView):
         try:
             # Buscar al usuario por cédula en la base de datos
             usuario = CustomUser.objects.get(cedula=cedula)
+            print(usuario)
+            print(password)
 
             # Verificar la contraseña del usuario
             if usuario.check_password(password):
@@ -192,6 +222,8 @@ class LoginView(APIView):
 
         except CustomUser.DoesNotExist:
             raise AuthenticationFailed('Las credenciales proporcionadas son inválidas.')
+        
+        print("No existe el usuario o contra incorrecta")
 
         return Response({'valid': False})
     

@@ -44,15 +44,14 @@ class Sede(models.Model):
 class Facultad(models.Model):
     id = models.IntegerField(primary_key=True)
     nombre = models.CharField(max_length=100)
-    sede = models.ForeignKey(Sede, on_delete=models.CASCADE)
 
-    def _str_(self):
-        return self.nombre
-
+    
 class ProgramaAcademico(models.Model):
     identificador_univalle = models.IntegerField()
     facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=100)
+    sede = models.ForeignKey(Sede, on_delete=models.CASCADE)
+
 
     def _str_(self):
         return self.nombre

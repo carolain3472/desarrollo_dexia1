@@ -20,10 +20,10 @@ class Sesion(models.Model):
 class SesionPrimeraVez(Sesion):
     PROGRAMAS = (('Psicología', 'Psicología'), ('Red CAAL', 'Red CAAL'))
 
-    estimacion_estudiante = (('Por debajo de la media', 'Por debajo de la media'), ('Por encima de la media', 'Por encima de la media')
+    estimacion_estudiante = (('Por debajo de la media', 'Por debajo de la media'), ('Por encima de la media', 'Por encima de la media'),
                              ('En la media', 'En la media'), ('No sabe/No responde', 'No sabe/No responde'))
     
-    alertas = (('Alto', 'Alto'), ('Medio', 'Medio')
+    alertas = (('Alto', 'Alto'), ('Medio', 'Medio'),
                ('Bajo', 'Bajo'), ('Ninguno', 'Ninguno'))
 
     estimacion_media = models.CharField(choices=estimacion_estudiante, null=False, blank=False, max_length = 50, unique=True)

@@ -6,13 +6,13 @@ export function Carga_Masiva() {
   const [tipoDeCarga, setTipoDeCarga] = useState("");
   const [archivo, setArchivo] = useState(null);
 
-  
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("tipo_de_carga", tipoDeCarga);
     formData.append("file", archivo);
-  
+    console.log(tipoDeCarga);
+
     axios;
     api
       .post("/login/carga_masiva/", formData)
@@ -24,10 +24,15 @@ export function Carga_Masiva() {
         console.error("No se subió el excel", error);
       });
   };
-  
 
   const handleTipoDeCargaChange = (event) => {
-    setTipoDeCarga(event.target.value);
+    // No se necesita esta función para actualizar el estado del select
+    // Mantén el handleTipoDeCargaChange vacío
+  };
+
+  const handleTipoDeCargaBlur = (event) => {
+    const selectedValue = event.target.value;
+    setTipoDeCarga(selectedValue);
   };
 
   const handleArchivoChange = (event) => {
@@ -38,9 +43,16 @@ export function Carga_Masiva() {
     <div>
       <form onSubmit={handleSubmit} style={{ marginLeft: '300px', marginTop: '50px' }}>
         <label style={{ marginRight: '30px' }}>Tipo de carga</label>
-        <select id="tipo_de_carga" name="tipo_de_carga" form="form_carga" onChange={handleTipoDeCargaChange}>
+        <select
+          id="tipo_de_carga"
+          name="tipo_de_carga"
+          form="form_carga"
+          onBlur={handleTipoDeCargaBlur}  // Utiliza onBlur en lugar de onChange
+        >
+          <option disabled value="" className="disabledOption"> Tipo de carga * </option>
           <option value="Estudiantes">Estudiantes</option>
-          <option value="Programa">Programa academico</option>
+          <option value="Facultades">Facultades</option>
+          <option value="Sede">Sede</option>
         </select>
 
         <label>Archivo</label>
