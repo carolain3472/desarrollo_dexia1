@@ -186,7 +186,7 @@ class LoginView(APIView):
                     token, _ = Token.objects.get_or_create(user=user)
                     print(user.is_superuser)
                     return Response({'valid': True, 'token': token.key, 'nombre': usuario.first_name, 'correo': usuario.email, 'apellido': usuario.primer_apellido,
-                                     'apellido_dos': usuario.segundo_apellido, 'rol': usuario.role
+                                     'apellido_dos': usuario.segundo_apellido, 'rol': usuario.role, 'id':usuario.id
                                      
                                      })
 

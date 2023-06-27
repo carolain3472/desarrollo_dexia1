@@ -7,6 +7,7 @@ export function Estudiantes_consejeros() {
   const [nombreFiltro, setNombreFiltro] = useState("");
   const [codigoFiltro, setCodigoFiltro] = useState("");
 
+  const id = sessionStorage.getItem("id");
 
 
   const handleIdentificacionFilter = (event) => {
@@ -54,14 +55,12 @@ const handCodigoFilter = (event) => {
       codigo_estudiantil,
     });
   
-    const url = `/estudiantes/listar_estudiantes/?${params.toString()}`;
+    const url = `/estudiantes/listar_estudiantes/?profesional=${id}&${params.toString()}`;
   
     api
       .get(url)
       .then((response) => {
         setEstudiantes(response.data);
-        console.log(response.data);
-        console.log(url);
       })
       .catch((error) => {
         console.error(error);
