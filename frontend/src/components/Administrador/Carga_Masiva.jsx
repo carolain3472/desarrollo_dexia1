@@ -53,6 +53,7 @@ export function Carga_Masiva() {
           <option value="Estudiantes">Estudiantes</option>
           <option value="Facultades">Facultades</option>
           <option value="Sede">Sede</option>
+          <option value="Programas">Programas</option>
         </select>
 
         <label>Archivo</label>
