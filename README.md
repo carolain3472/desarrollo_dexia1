@@ -27,6 +27,8 @@ python manage.py makemigrations modulo_base_login
 
 python manage.py makemigrations modulo_dexia_estudiantes 
 
+python manage.py makemigrations modulo_dexia_sesiones 
+
 python manage.py migrate
 
 # Correr el proyecto

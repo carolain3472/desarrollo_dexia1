@@ -25,10 +25,11 @@ from rest_framework import viewsets
 from django.contrib.auth.hashers import make_password
 import pandas as pd
 from .models import CustomUser
-from modulo_dexia_estudiantes.models import Facultad
-from modulo_dexia_estudiantes.models import Sede
+from modulo_dexia_estudiantes.models import Facultad, ProgramaAcademico, Sede
 from .filters import CustomUserFilter
 from django.http import HttpResponse
+
+from datetime import datetime
 
 #JWT y  O2 de validacion de token 
 class UsuariosList(viewsets.ModelViewSet):
@@ -96,18 +97,44 @@ class Validador_carga(APIView):
             return carga_sedes(file)
         elif tipo == 'Facultades':
             return carga_facultades(file)
+        elif tipo == 'Programas':
+            return carga_programa(file)
         else:
             return Response({'ERROR': 'No se seleccionó un tipo de carga válido.'})
 
 def carga_estudiantes(file):
-    print("entro al carga_estudiantes")
-    list_dict_result = []
-    lista_estudiantes =[]
+    print("entro al cargar estudiantes")
     print(file)
-    """  datos = pd.read_csv(file,header=0)
-    print(datos) """
-    """print("estos son los datos: "+str(datos)) """
-    return Response(status= status.HTTP_200_OK)
+
+    datos = pd.read_csv(file, header=0)
+    #print("estos son los datos: " + str(datos))
+
+    for i in range(datos.shape[0]):
+        profesional = CustomUser.objects.get(cedula = int(datos.iat[i, 0]))
+
+        nombre = str(datos.iat[i, 1])
+        primer_apellido = str(datos.iat[i, 2])
+        segundo_apellido = str(datos.iat[i, 3])
+        correo_institucional = str(datos.iat[i, 4])
+
+        fecha_doc = str(datos.iat[i, 5])
+        fecha_nacimiento = datetime.strptime(fecha_doc, "%Y-%m-%d").date()
+
+        doc_identidad = str(datos.iat[i, 6])
+        celular = str(datos.iat[i, 7])
+        codigo_estudiantil = str(datos.iat[i, 7])
+
+
+        if Estudiante.objects.filter(doc_identidad=doc_identidad).exists():
+            print(f'El estdiante con ID {doc_identidad} ya existe, no se puede cargar nuevamente.')
+        else:
+            estudiante = Estudiante(profesional=profesional, nombre=nombre, primer_apellido=primer_apellido, segundo_apellido=segundo_apellido,
+                                    correo_institucional=correo_institucional, fecha_nacimiento=fecha_nacimiento, doc_identidad=doc_identidad, celular=celular,
+                                    codigo_estudiantil=codigo_estudiantil)
+            Estudiante.save()
+
+    response = HttpResponse("Carga masiva completed successfully!")
+    return response
 
 
 def carga_facultades(file):
@@ -156,6 +183,28 @@ def carga_sedes(file):
     response = HttpResponse("Carga masiva completed successfully!")
     return response
 
+
+def carga_programa(file):
+    print("entro al cargar programas")
+    print(file)
+
+    datos = pd.read_csv(file, header=0)
+    print("estos son los datos: " + str(datos))
+
+    for i in range(datos.shape[0]):
+        identificador_univalle = int(datos.iat[i, 0])
+        facultad = Facultad.objects.get(id = int(datos.iat[i, 1]))
+        nombre = str(datos.iat[i, 2])
+        sede = Sede.objects.get(identificador_univalle = int(datos.iat[i, 3]))
+
+        if ProgramaAcademico.objects.filter(sede=sede, identificador_univalle=identificador_univalle).exists():
+            print(f'El programa con ID {identificador_univalle} ya existe en la sede {sede}, no se puede cargar nuevamente.')
+        else:
+            programa = ProgramaAcademico(identificador_univalle=identificador_univalle, facultad=facultad, nombre=nombre, sede=sede)
+            programa.save()
+
+    response = HttpResponse("Carga masiva completed successfully!")
+    return response
 
 
 class Login(FormView):
