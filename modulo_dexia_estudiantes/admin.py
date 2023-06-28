@@ -5,4 +5,6 @@ from .models import *
 admin.site.register(Estudiante)
 admin.site.register(Programa_acompañamiento)
 admin.site.register(Remision)
+admin.site.register(ProgramaAcademico)
+admin.site.register(Estudiante_programa)
 
