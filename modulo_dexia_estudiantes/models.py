@@ -55,3 +55,9 @@ class ProgramaAcademico(models.Model):
 
     def _str_(self):
         return self.nombre
+
+
+class Estudiante_programa(models.Model):
+    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, null=False)
+    programa = models.ForeignKey(ProgramaAcademico, on_delete=models.CASCADE, null=False)
+

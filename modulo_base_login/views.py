@@ -25,7 +25,7 @@ from rest_framework import viewsets
 from django.contrib.auth.hashers import make_password
 import pandas as pd
 from .models import CustomUser
-from modulo_dexia_estudiantes.models import Facultad, ProgramaAcademico, Sede
+from modulo_dexia_estudiantes.models import Facultad, ProgramaAcademico, Sede, Estudiante, Estudiante_programa
 from .filters import CustomUserFilter
 from django.http import HttpResponse
 
@@ -122,16 +122,33 @@ def carga_estudiantes(file):
 
         doc_identidad = str(datos.iat[i, 6])
         celular = str(datos.iat[i, 7])
-        codigo_estudiantil = str(datos.iat[i, 7])
+        codigo_estudiantil = str(datos.iat[i, 8])
+
+      
+        sede = Sede.objects.get(identificador_univalle = int(datos.iat[i, 9]))
+        facultad = Facultad.objects.get(id = int(datos.iat[i, 10]))
+        programa = ProgramaAcademico.objects.get(identificador_univalle=int(datos.iat[i, 11]), sede=sede, facultad=facultad)
+        
 
 
         if Estudiante.objects.filter(doc_identidad=doc_identidad).exists():
-            print(f'El estdiante con ID {doc_identidad} ya existe, no se puede cargar nuevamente.')
+            
+            estudiante = Estudiante.objects.get(doc_identidad=doc_identidad)
+   
+            if Estudiante_programa.objects.filter(estudiante=estudiante, programa=programa).exists():
+                print(f'El estdiante con ID {doc_identidad} ya existe en el programa {datos.iat[i, 11]}, no se puede cargar nuevamente.')
+            else:
+                programa_estudiante = Estudiante_programa(estudiante=estudiante, programa=programa)
+                programa_estudiante.save()
+
         else:
             estudiante = Estudiante(profesional=profesional, nombre=nombre, primer_apellido=primer_apellido, segundo_apellido=segundo_apellido,
                                     correo_institucional=correo_institucional, fecha_nacimiento=fecha_nacimiento, doc_identidad=doc_identidad, celular=celular,
                                     codigo_estudiantil=codigo_estudiantil)
-            Estudiante.save()
+            estudiante.save()
+
+            programa_estudiante = Estudiante_programa(estudiante=estudiante, programa=programa)
+            programa_estudiante.save()
 
     response = HttpResponse("Carga masiva completed successfully!")
     return response
