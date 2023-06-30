@@ -13,6 +13,7 @@ import { EstudiantesList_consejeros } from './pages/Consejero/estudiantesList_co
 import { Inicio_consejero } from './pages/Consejero/Inicio_consejero';
 import { Carga } from './pages/Administrador/Carga';
 import { Acceso_denegado } from './pages/denegado';
+import { Sesiones } from './pages/Consejero/Sesiones';
 
 function App() {
   const rol = sessionStorage.getItem("rol");
@@ -41,7 +42,7 @@ function App() {
         <Route path='/ajustes_consejeros' element={validarAcceso("Consejero", <Configuracion_consejero_page />)} />
         <Route path='/estudiantes_consejeria' element={validarAcceso("Consejero", <EstudiantesList_consejeros />)} />
         <Route path='/inicioConsejero' element={validarAcceso("Consejero", <Inicio_consejero />)} />
-        
+        <Route path='/sesiones' element={validarAcceso("Consejero", <Sesiones />)} />
 
       {/* Ruta predeterminada para CONSEJERO */}
      <Route path='/inicioConsejero' element={<Inicio_consejero />} index />
