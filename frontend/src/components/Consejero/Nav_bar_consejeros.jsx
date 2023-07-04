@@ -108,6 +108,10 @@ export function NavbarConsejeros() {
     navigate("/inicioConsejero"); // Redireccionar a la página de inicio
   };
 
+  const redireccionarSesiones = () => {
+    navigate("/sesiones"); // Redireccionar a la página de inicio
+  };
+
   useEffect(() => {
     // Verificar si la ubicación actual es la página de registro
     if (location.pathname === "/registro") {
@@ -173,7 +177,7 @@ export function NavbarConsejeros() {
         </a>
         <div className="dashboard-nav-dropdown">
           <a
-            /* onClick={redireccionar} */
+            onClick={redireccionarSesiones}
             href="#!"
             className={`dashboard-nav-item ${
               location.pathname === "/registro" ? "active" : ""
