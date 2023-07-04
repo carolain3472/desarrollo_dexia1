@@ -11,7 +11,7 @@ class Sesion(models.Model):
     asistencia = models.BooleanField(default=False)
     fecha = models.DateField(null = False, default = datetime.date.today)
     descripcion = models.TextField(blank=True, null=False, max_length=500)
-    fecha_proxima_sesion = models.DateField(null=False, blank=True)
+    fecha_proxima_sesion = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f"Sesión {self.id} - {self.fecha}"
@@ -36,7 +36,7 @@ class SesionPrimeraVez(Sesion):
     riesgo_psicologico = models.CharField(choices=alertas, null=False, blank=False, max_length = 10, default=None)
     descripcion_participacion = models.TextField(blank=True, null=False, max_length=500, default=None)
     remision = models.ForeignKey(Programa_acompañamiento, on_delete=models.CASCADE, null=False, default=None)
-    eps =models.TextField(max_length=30, null=False, blank=True)
+    eps = models.TextField(max_length=30, null=False, blank=True)
     contacto_adicional = models.TextField(max_length=11, null=False, blank=True)
 
     
