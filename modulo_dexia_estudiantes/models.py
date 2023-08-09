@@ -6,8 +6,6 @@ from modulo_base_login.models import CustomUser
 class Estudiante(models.Model):
 
     profesional = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False)
-    
-
     nombre = models.CharField(max_length=30, blank=False, null=False)
     primer_apellido = models.CharField(max_length=30, blank=False, null=False)
     segundo_apellido = models.CharField(max_length=30, blank=True)

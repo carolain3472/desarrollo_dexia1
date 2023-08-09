@@ -65,6 +65,7 @@ class SesionPrimeraVez(APIView):
         descripcion = request.POST.get("Observaciones")
         proxima_cita = request.POST.get("prox_cita")
         fecha_sesion = request.POST.get("fecha_Sesion")
+        
 
         if proxima_cita:
             fecha_str = request.POST.get("fecha_Sesion")
@@ -89,6 +90,7 @@ class SesionPrimeraVez(APIView):
         materias_canceladas = request.POST.get("materias_canceladas")
         motivo_materias_canceladas = request.POST.get("motivo_materias_canceladas")
         materias_mas_complejas = request.POST.get("materias_mas_complejas")
+        condicion_de_estudiante = request.POST.get('condicion_estudiante')
 
         try:
             if proxima_cita:
@@ -117,7 +119,8 @@ class SesionPrimeraVez(APIView):
                                         contacto_adicional=contacto_adicional,
                                         materias_canceladas=materias_canceladas,
                                         motivo_materias_canceladas=motivo_materias_canceladas, 
-                                        materias_mas_complejas=materias_mas_complejas
+                                        materias_mas_complejas=materias_mas_complejas,
+                                        condicion_de_estudiante=condicion_de_estudiante
                                     )
                 #Crear la proxima sesion
                 nueva_cita = Agendar_cita(
@@ -162,7 +165,8 @@ class SesionPrimeraVez(APIView):
                                         contacto_adicional=contacto_adicional,
                                         materias_canceladas=materias_canceladas,
                                         motivo_materias_canceladas=motivo_materias_canceladas, 
-                                        materias_mas_complejas=materias_mas_complejas
+                                        materias_mas_complejas=materias_mas_complejas, 
+                                        condicion_de_estudiante=condicion_de_estudiante
                                     )
 
                 sesion_primera_vez.save()

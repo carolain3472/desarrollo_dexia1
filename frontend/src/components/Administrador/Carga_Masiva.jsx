@@ -7,7 +7,7 @@ import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 
 export function Carga_Masiva() {
-  const [tipoDeCarga, setTipoDeCarga] = useState("");
+  const [tipoDeCarga, setTipoDeCarga] = useState("Estudiante");
   const [archivo, setArchivo] = useState(null);
 
   const handleSubmit = (event) => {
