@@ -22,14 +22,20 @@ class AgendarCitaView(APIView):
         cedula_estudiante = request.data.get("cedula_estudiante")
         fecha_str = request.data.get("fecha_Sesion")
         print(fecha_str)
+        print(cedula_profesional)
+        print(cedula_estudiante)
 
         try:
+            print('Datos BD')
             # Obtener el profesional y el estudiante por su cédula
             profesional = CustomUser.objects.get(cedula = str(cedula_profesional))
+            print(profesional)
             estudiante = Estudiante.objects.get(doc_identidad= str(cedula_estudiante))
+            print(estudiante)
 
             # Convertir la fecha de cadena a objeto datetime
             fecha = datetime.strptime(fecha_str, "%Y-%m-%dT%H:%M")
+            print(fecha)
  
             
 

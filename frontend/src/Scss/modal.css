@@ -1,0 +1,12 @@
+/* Estilos para el modal personalizado */
+.custom-modal .modal-dialog {
+    max-width: 800px; /* Cambia el ancho máximo del modal según tus necesidades */
+    margin-left: 35%;
+
+  }
+  
+  .custom-modal .modal-content {
+    min-height: 800px; /* Cambia la altura mínima del modal según tus necesidades */
+    overflow: auto;
+  }
+  
