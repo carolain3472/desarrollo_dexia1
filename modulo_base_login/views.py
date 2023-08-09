@@ -1,5 +1,4 @@
 from django_filters import rest_framework as filters
-
 from django.shortcuts import render,redirect
 from rest_framework import generics
 from django.urls import reverse_lazy
@@ -19,7 +18,6 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import AllowAny
 from django.db.models import Q
-
 from .serializer import UsuarioSerializer
 from rest_framework import viewsets
 from django.contrib.auth.hashers import make_password
@@ -28,8 +26,8 @@ from .models import CustomUser
 from modulo_dexia_estudiantes.models import Facultad, ProgramaAcademico, Sede, Estudiante, Estudiante_programa
 from .filters import CustomUserFilter
 from django.http import HttpResponse
-
 from datetime import datetime
+
 
 #JWT y  O2 de validacion de token 
 class UsuariosList(viewsets.ModelViewSet):
@@ -128,9 +126,9 @@ def carga_estudiantes(file):
         sede = Sede.objects.get(identificador_univalle = int(datos.iat[i, 9]))
         facultad = Facultad.objects.get(id = int(datos.iat[i, 10]))
         programa = ProgramaAcademico.objects.get(identificador_univalle=int(datos.iat[i, 11]), sede=sede, facultad=facultad)
-        
+        posible_desertor = (str(datos.iat[i, 12])=='VERDADERO')
 
-
+        print(posible_desertor)
         if Estudiante.objects.filter(doc_identidad=doc_identidad).exists():
             
             estudiante = Estudiante.objects.get(doc_identidad=doc_identidad)
@@ -144,7 +142,7 @@ def carga_estudiantes(file):
         else:
             estudiante = Estudiante(profesional=profesional, nombre=nombre, primer_apellido=primer_apellido, segundo_apellido=segundo_apellido,
                                     correo_institucional=correo_institucional, fecha_nacimiento=fecha_nacimiento, doc_identidad=doc_identidad, celular=celular,
-                                    codigo_estudiantil=codigo_estudiantil)
+                                    codigo_estudiantil=codigo_estudiantil, posible_desertor=posible_desertor)
             estudiante.save()
 
             programa_estudiante = Estudiante_programa(estudiante=estudiante, programa=programa)

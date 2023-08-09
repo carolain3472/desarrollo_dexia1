@@ -66,8 +66,8 @@ export function Sesiones_list() {
     ];
 
     return preguntas.map((pregunta, index) => (
-      <tr style={{border:'1px solid black'}} key={index}>
-        <td style={{border:'1px solid black'}}>{pregunta}</td>
+      <tr style={{ border: "1px solid black" }} key={index}>
+        <td style={{ border: "1px solid black" }}>{pregunta}</td>
         {dimensiones.map((dimension, dimIndex) => (
           <td key={dimIndex}>
             <input
@@ -77,13 +77,44 @@ export function Sesiones_list() {
               checked={selectedOptionsRiesgo[index] === dimension}
               onChange={() => handleOptionChange(index, dimension)}
               required
-              style={{marginLeft:'36%'}}
+              style={{ marginLeft: "36%" }}
             />
           </td>
         ))}
       </tr>
     ));
   };
+
+  /*---------------------------------------------------------------------------------------*/
+  const [texto, setTexto] = useState("");
+  const maxLength = 200;
+
+  const handleChange = (event) => {
+    const inputText = event.target.value;
+    if (inputText.length <= maxLength) {
+      setTexto(inputText);
+    }
+  };
+
+  const [texto1, setTexto1] = useState("");
+
+  const handleChange1 = (event) => {
+    const inputText = event.target.value;
+    if (inputText.length <= maxLength) {
+      setTexto1(inputText);
+    }
+  };
+  
+
+  const [texto2, setText2] = useState("");
+
+  const handleChange2 = (event) => {
+    const inputText = event.target.value;
+    if (inputText.length <= maxLength) {
+      setText2(inputText);
+    }
+  };
+
 
   return (
     <div>
@@ -170,10 +201,13 @@ export function Sesiones_list() {
                                     Primera vez
                                   </button>
 
-
                                   <button
                                     className="btn btn-sm btn-danger"
-                                    style={{ width: "30%", fontSize: "20px", marginLeft:"5%" }}
+                                    style={{
+                                      width: "30%",
+                                      fontSize: "20px",
+                                      marginLeft: "5%",
+                                    }}
                                     onClick={() => {
                                       handleModalOpen();
                                     }}
@@ -217,7 +251,13 @@ export function Sesiones_list() {
             <span aria-hidden="true">&times;</span>
           </Button>
         </Modal.Header>
-        <Modal.Body style={{ maxHeight: "70vh", overflowY: "auto", background: '#F4EEEE'}}>
+        <Modal.Body
+          style={{
+            maxHeight: "70vh",
+            overflowY: "auto",
+            background: "#F4EEEE",
+          }}
+        >
           <form>
             <div
               style={{
@@ -227,195 +267,357 @@ export function Sesiones_list() {
               }}
             >
               <ol>
-                <li  style={{fontSize:'1.2rem', color:'black'}}>
+                <li
+                  style={{
+                    fontSize: "1.2rem",
+                    color: "black",
+                    marginBottom: "2%",
+                  }}
+                >
                   <label htmlFor="estimacion_media">
                     ¿El estudiante asistió a su cita?:
                   </label>
                 </li>
-
-                <div className="custom-radio" style={{marginLeft:'35%', marginTop:'2%', marginBottom:'3%'}}>
-
-      <input type="radio" name="asistencia" id="si" />
-      <label htmlFor="si" style={{ fontSize: '16px', }}>Sí</label>
-    </div>
-
-
-    <div className="custom-radio" style={{marginLeft:'10%'}}>
-      <input type="radio" name="asistencia" id="no" />
-      <label htmlFor="no" style={{ fontSize: '1rem' }}>No</label>
-    </div>
-
-
-                <li style={{fontSize:'1.2rem', color:'black'}}>
+                <div
+                  className="custom-radio"
+                  style={{
+                    marginLeft: "35%",
+                    marginTop: "2%",
+                    marginBottom: "3%",
+                  }}
+                >
+                  <input type="radio" name="asistencia" id="si" />
+                  <label htmlFor="si" style={{ fontSize: "16px" }}>
+                    Sí
+                  </label>
+                </div>
+                <div className="custom-radio" style={{ marginLeft: "10%" }}>
+                  <input type="radio" name="asistencia" id="no" />
+                  <label htmlFor="no" style={{ fontSize: "1rem" }}>
+                    No
+                  </label>
+                </div>
+                <li style={{ fontSize: "1.2rem", color: "black" }}>
                   <label htmlFor="estimacion_media">
                     Riesgo que posee el estudiante según la dimension:
                   </label>
-
                 </li>
-                <table style={{marginLeft:'20%', marginTop:'2%', marginBottom:'3%'}}>
+                <table
+                  style={{
+                    marginLeft: "15%",
+                    marginTop: "3%",
+                    marginBottom: "3%",
+                  }}
+                >
                   <thead>
                     <tr>
                       <th
                         style={{
-                          backgroundColor: '#EB5656', color: 'white', padding: '10px', border:'1px solid black'
+                          backgroundColor: "#EB5656",
+                          color: "white",
+                          padding: "10px",
+                          border: "1px solid black",
                         }}
                       >
                         Pregunta
                       </th>
                       <th
                         style={{
-                          backgroundColor: '#EB5656', color: 'white', padding: '10px',border:'1px solid black'
+                          backgroundColor: "#EB5656",
+                          color: "white",
+                          padding: "10px",
+                          border: "1px solid black",
                         }}
                       >
                         Alta
                       </th>
                       <th
                         style={{
-                          backgroundColor: '#EB5656', color: 'white', padding: '10px', border:'1px solid black'
+                          backgroundColor: "#EB5656",
+                          color: "white",
+                          padding: "10px",
+                          border: "1px solid black",
                         }}
                       >
                         Medio
                       </th>
                       <th
                         style={{
-                          backgroundColor: '#EB5656', color: 'white', padding: '10px', border:'1px solid black'
+                          backgroundColor: "#EB5656",
+                          color: "white",
+                          padding: "10px",
+                          border: "1px solid black",
                         }}
                       >
                         Bajo
                       </th>
                       <th
                         style={{
-                          backgroundColor: '#EB5656', color: 'white', padding: '10px', border:'1px solid black'
+                          backgroundColor: "#EB5656",
+                          color: "white",
+                          padding: "10px",
+                          border: "1px solid black",
                         }}
                       >
                         Ninguno
                       </th>
                     </tr>
                   </thead>
-                  <tbody style={{accentColor:'#850000', borderLeft: '1px solid black', border:'1px solid black'}}>{renderRows()}</tbody>
+                  <tbody
+                    style={{
+                      accentColor: "#850000",
+                      borderLeft: "1px solid black",
+                      border: "1px solid black",
+                    }}
+                  >
+                    {renderRows()}
+                  </tbody>
                 </table>
-
-
-
-                <li>
+                <li
+                  style={{
+                    fontSize: "1.2rem",
+                    color: "black",
+                    marginBottom: "2%",
+                  }}
+                >
                   <label style={{ display: "inline" }}>
                     En su rendimiento académico, usted percibe con relación a su
                     grupo, que se encuentra:
                   </label>
                 </li>
                 <div>
-                  <input type="radio" id="si" name="respuesta" />
-                  <label>Por debajo de la media</label>
+                  <input
+                    className="radio"
+                    type="radio"
+                    id="si"
+                    name="respuesta"
+                  />
+                  <label className="letra">Por debajo de la media</label>
                 </div>
                 <div>
-                  <input type="radio" id="no" name="respuesta" />
-                  <label>Por encima de la media</label>
+                  <input
+                    className="radio"
+                    type="radio"
+                    id="no"
+                    name="respuesta"
+                  />
+                  <label className="letra">Por encima de la media</label>
                 </div>
                 <div>
-                  <input type="radio" id="no" name="respuesta" />
-                  <label>En la media</label>
+                  <input
+                    className="radio"
+                    type="radio"
+                    id="no"
+                    name="respuesta"
+                  />
+                  <label className="letra">En la media</label>
                 </div>
                 <div>
-                  <input type="radio" id="no" name="respuesta" />
-                  <label>No sabe / No responde</label>
+                  <input
+                    className="radio"
+                    type="radio"
+                    id="no"
+                    name="respuesta"
+                  />
+                  <label className="letra">No sabe / No responde</label>
                 </div>
-                <li>
+                <li
+                  style={{
+                    fontSize: "1.2rem",
+                    color: "black",
+                    marginTop: "2%",
+                  }}
+                >
                   <label style={{ display: "inline" }}>
                     {" "}
                     ¿Cuáles son las expectativas del acompañamiento? (opcional,
                     sólo cuando el estudiante haya solicitado el acompañamiento)
                   </label>
                 </li>
-                <input
-                  type="text"
-                  style={{ width: "70%", marginLeft: "10%", height: "100px" }}
-                />
-                <li>
-                  <label style={{ display: "inline" }}>
+                <textarea
+                  value={texto}
+                  onChange={handleChange}
+                  maxlength="200"
+                  name="textoArea"
+                  cols="70"
+                  rows="5"
+                  style={{ marginTop: "3%", resize: "none" }}
+                ></textarea>
+                <div style={{ marginLeft: "85%" }}>
+                  {texto.length} / {maxLength}
+                </div>
+
+                <li style={{marginBottom:'2%',    fontSize: "1.2rem",
+                   color: "black",}}>
+                  <label style={{ display: "inline", 
+                   fontSize: "1.2rem",
+                   color: "black",
+                 }}>
+                
                     {" "}
                     Palabras clave que describan este caso en específico:
                   </label>
                 </li>
-                <input
-                  type="text"
-                  style={{ width: "70%", marginLeft: "10%", height: "100px" }}
-                />
-                <li>
-                  <label style={{ display: "inline" }}>
+
+                <textarea
+                  value={texto1}
+                  onChange={handleChange1}
+                  maxlength="200"
+                  name="textoArea"
+                  cols="70"
+                  rows="5"
+                  style={{ marginTop: "3%", resize: "none" }}
+                ></textarea>
+                <div style={{ marginLeft: "85%" }}>
+                  {texto1.length} / {maxLength}
+                </div>
+
+
+
+
+
+                <li style={{
+                    fontSize: "1.2rem",
+                    color: "black",
+                    marginBottom: "2%",
+              
+                  }}>
+                  <label >
                     ¿Ha sido diagnosticado(a) con algún tipo de discapacidad?
                   </label>
                 </li>
+
                 <div>
-                  <input type="radio" id="si" name="respuesta1" />
-                  <label>No ha sido diagnosticad@</label>
+                  <input className="radio" type="radio" id="si" name="respuesta1" />
+                  <label className="letra">No ha sido diagnosticad@</label>
                 </div>
                 <div>
-                  <input type="radio" id="no" name="respuesta1" />
-                  <label>Discapacidad fisica</label>
+                  <input className="radio" type="radio" id="no" name="respuesta1" />
+                  <label className="letra">Discapacidad fisica</label>
                 </div>
                 <div>
-                  <input type="radio" id="no" name="respuesta1" />
-                  <label>Discapacidad visual</label>
+                  <input className="radio" type="radio" id="no" name="respuesta1" />
+                  <label className="letra">Discapacidad visual</label>
                 </div>
                 <div>
-                  <input type="radio" id="no" name="respuesta1" />
-                  <label>Discapacidad auditiva</label>
+                  <input className="radio" type="radio" id="no" name="respuesta1" />
+                  <label className="letra">Discapacidad auditiva</label>
                 </div>
                 <div>
-                  <input type="radio" id="no" name="respuesta1" />
-                  <label>Discapacidad de aprendizaje</label>
+                  <input className="radio" type="radio" id="no" name="respuesta1" />
+                  <label className="letra">Discapacidad de aprendizaje</label>
                 </div>
                 <div>
-                  <input type="radio" id="no" name="respuesta1" />
-                  <label>Discapacidad psicosocial</label>
+                  <input className="radio" type="radio" id="no" name="respuesta1" />
+                  <label className="letra">Discapacidad psicosocial</label>
                 </div>
-                <li>
+
+
+                <li style={{
+                    fontSize: "1.2rem",
+                    color: "black",
+                    marginBottom: "2%",
+              
+                  }} >
+
                   <label style={{ display: "inline" }}> EPS: </label>
                 </li>
-                <input
-                  type="text"
-                  style={{ width: "70%", marginLeft: "10%" }}
-                />
-                <li>
+                <textarea
+                  maxlength="200"
+                  name="textoArea"
+                  cols="70"
+                  rows="2"
+                  style={{ marginTop: "1%", resize: "none" }}
+                ></textarea>
+
+
+
+                <li style={{
+                    fontSize: "1.2rem",
+                    color: "black",
+                    marginBottom: "2%",
+              
+                  }}>
                   <label style={{ display: "inline" }}>
                     {" "}
                     ¿Cuál o cuáles son las razones por las cuales te encuentras
                     en este momento en el programa académico que elegiste?{" "}
                   </label>
                 </li>
-                <input
-                  type="text"
-                  style={{ width: "70%", marginLeft: "10%", height: "200px" }}
-                />
-                <li>
+
+                <textarea
+                  value={texto2}
+                  onChange={handleChange2}
+                  maxlength="200"
+                  name="textoArea"
+                  cols="70"
+                  rows="5"
+                  style={{ marginTop: "3%", resize: "none" }}
+                ></textarea>
+                <div style={{ marginLeft: "85%" }}>
+                  {texto2.length} / {maxLength}
+                </div>
+
+
+
+                <li style={{
+                    fontSize: "1.2rem",
+                    color: "black",
+                    marginBottom: "2%",
+                  }}>
+
                   <label style={{ display: "inline" }}>
                     {" "}
                     Contacto adicional:{" "}
                   </label>
                 </li>
-                <input
-                  type="text"
-                  style={{ width: "70%", marginLeft: "10%" }}
-                />
-                <li>
+                <textarea
+                  maxlength="200"
+                  name="textoArea"
+                  cols="70"
+                  rows="2"
+                  style={{ marginTop: "1%", resize: "none" }}
+                ></textarea>
+
+
+                <li style={{
+                    fontSize: "1.2rem",
+                    color: "black",
+                    marginBottom: "2%",
+                  }}>
                   <label htmlFor="estimacion_media">
                     ¿Ha tenido que cancelar materias a lo largo del semestre?:
                   </label>
                 </li>
-                <input
-                  type="radio" 
-                  name="respuestaMat"
-                  style={{ accentColor: "red" }}
-                />{" "}
-                Sí
-                <input
-                  type="radio" 
-                  name="respuestaMat"
-                  style={{ accentColor: "red" }}
-                />{" "}
-                No
+                
+                <div
+                  className="custom-radio"
+                  style={{
+                    marginLeft: "35%",
+                    marginTop: "2%",
+                    marginBottom: "3%",
+                  }}
+                >
+                  <input type="radio" name="materias" id="si1" />
+                  <label htmlFor="si1" style={{ fontSize: "16px" }}>
+                    Sí
+                  </label>
+                </div>
+                <div className="custom-radio" style={{ marginLeft: "10%" }}>
+                  <input type="radio" name="materias" id="no1" />
+                  <label htmlFor="no1" style={{ fontSize: "1rem" }}>
+                    No
+                  </label>
+                </div>
+              
+
+
+
                 <li>
-                  <label style={{ display: "inline" }}> ¿Por qué motivo? </label>
+                  <label style={{ display: "inline" }}>
+                    {" "}
+                    ¿Por qué motivo?{" "}
+                  </label>
                 </li>
                 <input
                   type="checkbox"
@@ -423,46 +625,36 @@ export function Sesiones_list() {
                   style={{ accentColor: "red" }}
                 />{" "}
                 Personal
-
                 <input
                   type="checkbox"
                   name="respuesta5"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Económico
-
                 <input
                   type="checkbox"
                   name="respuesta5"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Familiar
-
-
                 <input
                   type="checkbox"
                   name="respuesta5"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Académico
-
                 <input
                   type="checkbox"
                   name="respuesta5"
                   style={{ accentColor: "red" }}
                 />{" "}
-                Salud fisica 
-
-
+                Salud fisica
                 <input
                   type="checkbox"
                   name="respuesta5"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Salud mental
-                
-                
-
                 <li>
                   <label style={{ display: "inline" }}>
                     {" "}
@@ -492,30 +684,24 @@ export function Sesiones_list() {
                   </label>
                 </li>
                 <input
-                  type="radio" 
+                  type="radio"
                   name="respuestaReunion"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Sí
                 <input
-                  type="radio" 
+                  type="radio"
                   name="respuestaReunion"
                   style={{ accentColor: "red" }}
                 />{" "}
                 No
-
-
                 <li>
                   <label htmlFor="estimacion_media">
                     ¿Habrá próxima reunión?:
                   </label>
                 </li>
-                <input
-                  type="date"
-                />{" "}
-               
-
-               <li>
+                <input type="date" />{" "}
+                <li>
                   <label htmlFor="estimacion_media">
                     Orientación remitida:
                   </label>
@@ -523,139 +709,105 @@ export function Sesiones_list() {
                 <input
                   type="checkbox"
                   name="respuesta4"
-                  style={{ accentColor: "red"}}
+                  style={{ accentColor: "red" }}
                 />{" "}
                 ASES
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Psicología
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Trabajo social
-
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Secretaria académica
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Desarrollo humano y promoción socieconómica
-
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Asuntos estudiantiles
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Deporte, recreación y cultura
-
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Centro de estudios de género
-
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Campus diverso
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 GRACA
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Asuntos étnicos
-
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Programas de discapacidad e inclusión
-
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Comité de derechos humanos
-
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Red CAAL
-
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Equipo de consejería
-
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Servicio psicológico
-
                 <input
                   type="checkbox"
                   name="respuesta4"
                   style={{ accentColor: "red" }}
                 />{" "}
                 Externo
-
-
-
-
-
-
-
-                
-
               </ol>
             </div>
           </form>
@@ -670,7 +822,6 @@ export function Sesiones_list() {
           >
             Cancelar
           </Button>
-
 
           <Button
             type="submit"

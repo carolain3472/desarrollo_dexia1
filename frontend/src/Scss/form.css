@@ -21,4 +21,20 @@
     background-color: #EB5656;
     color: white;
   }
+
+
+  .radio{
+    height: 40px;
+    width: 20px;
+    vertical-align: middle;
+    accent-color: rgb(219, 79, 79);
+}
+
+.letra{
+  font-size: 1.2rem;
+  color: black;
+  margin-left: 2%; 
+  display: inline-block;
+  vertical-align: middle;
+}
   

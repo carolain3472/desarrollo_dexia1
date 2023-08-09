@@ -34,6 +34,7 @@ class Sesion(models.Model):
     riesgo_economico = models.CharField(choices=alertas, null=True, blank=True, max_length=10)
     riesgo_universitario = models.CharField(choices=alertas, null=True, blank=True, max_length=10)
     riesgo_psicologico = models.CharField(choices=alertas, null=True, blank=True, max_length=10)
+    
 
     def __str__(self):
         return f"Sesión {self.id} - {self.fecha}"
@@ -54,6 +55,7 @@ class SesionPrimeraVez(Sesion):
     materias_canceladas = models.BooleanField(default=False, null=True)
     motivo_materias_canceladas = models.TextField(max_length=200, null=True)
     materias_mas_complejas = models.TextField(max_length=200, null=True)
+    condicion_de_estudiante = models.CharField(max_length=20, null=False)
 
     
     def __str__(self):
