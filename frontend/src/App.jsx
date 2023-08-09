@@ -4,6 +4,7 @@ import { Next } from './pages/Administrador/Next';
 import { Registro } from './pages/Administrador/registro';
 import "./Scss/login.css";
 import "./Scss/tabla.css";
+import "./Scss/form.css";
 import { Inicio_app } from './pages/Administrador/inicio_app';
 import { UsuariosList_all } from './pages/Administrador/usuariosList';
 import { Configuracion_user } from './pages/Administrador/configuracion_user';
